@@ -37,24 +37,6 @@ export default function Footer() {
                 >
                   <i className="fab fa-twitter"></i>
                 </button>
-                <button
-                  className="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
-                >
-                  <i className="fab fa-facebook-square"></i>
-                </button>
-                <button
-                  className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
-                >
-                  <i className="fab fa-dribbble"></i>
-                </button>
-                <button
-                  className="bg-white text-gray-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
-                >
-                  <i className="fab fa-github"></i>
-                </button>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -69,7 +51,7 @@ export default function Footer() {
                         className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
                         href="https://www.creative-tim.com/presentation?ref=nnjs-footer"
                       >
-                        About Us
+                        Contract
                       </a>
                     </li>
                     <li>
@@ -77,23 +59,7 @@ export default function Footer() {
                         className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
                         href="https://blog.creative-tim.com?ref=nnjs-footer"
                       >
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                        href="https://www.github.com/creativetimofficial?ref=nnjs-footer"
-                      >
-                        Github
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/bootstrap-themes/free?ref=nnjs-footer"
-                      >
-                        Free Products
+                        FAQ
                       </a>
                     </li>
                   </ul>
@@ -106,33 +72,9 @@ export default function Footer() {
                     <li>
                       <a
                         className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                        href="https://github.com/creativetimofficial/notus-nextjs/blob/master/LICENSE.md?ref=nnjs-footer"
-                      >
-                        MIT License
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/terms?ref=nnjs-footer"
                       >
                         Terms & Conditions
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/privacy?ref=nnjs-footer"
-                      >
-                        Privacy Policy
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/contact-us?ref=nnjs-footer"
-                      >
-                        Contact Us
                       </a>
                     </li>
                   </ul>
@@ -144,14 +86,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-gray-600 font-semibold py-1">
-                Copyright © {new Date().getFullYear()} Notus NextJS by{" "}
-                <a
-                  href="https://www.creative-tim.com?ref=nnjs-footer"
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  Creative Tim
-                </a>
-                .
+                Copyright © {new Date().getFullYear()} Game of Life
               </div>
             </div>
           </div>
