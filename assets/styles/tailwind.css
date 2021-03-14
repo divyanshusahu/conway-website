@@ -1203,12 +1203,6 @@ video {
   background-color: rgba(74, 85, 104, var(--bg-opacity));
 }
 
-.active\:bg-green-600:active {
-  --bg-opacity: 1;
-  background-color: #38a169;
-  background-color: rgba(56, 161, 105, var(--bg-opacity));
-}
-
 .active\:bg-indigo-600:active {
   --bg-opacity: 1;
   background-color: #5a67d8;
@@ -1818,6 +1812,10 @@ video {
 
 .h-2 {
   height: 0.5rem;
+}
+
+.h-3 {
+  height: 0.75rem;
 }
 
 .h-5 {

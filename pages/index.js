@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { Link as RSLink, Element } from "react-scroll";
-import Web3 from 'web3';
+import Web3 from "web3";
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
@@ -27,9 +27,11 @@ class Index extends Component {
 
   async componentWillReceiveProps(p) {
     if (this.state.web3 != null) {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      this.setState({ connected: true, wallet: accounts[0] })
-      console.log(this.state.wallet)
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      this.setState({ connected: true, wallet: accounts[0] });
+      console.log(this.state.wallet);
     } else {
       alert('Metamask is not installed')
       return
@@ -48,10 +50,10 @@ class Index extends Component {
       return
     };
     let _web3 = new Web3(window.ethereum);
-    console.log(await _web3.eth.getChainId())
-    if (CHAIN_ID !== await _web3.eth.getChainId()) {
-      alert('Connected to wrong network, use BSC')
-      return
+    console.log(await _web3.eth.getChainId());
+    if (CHAIN_ID !== (await _web3.eth.getChainId())) {
+      alert("Connected to wrong network, use BSC");
+      return;
     }
     let s = {
       web3: _web3,
@@ -75,12 +77,14 @@ class Index extends Component {
     })
     // await this.buyToken(1)
   }
+  
   closeModal() {
     this.setState({
       shareModalOpen: false,
-      buyModalOpen: false
-    })
-  };
+      buyModalOpen: false,
+    });
+  }
+  
   render() {
     return (
       <>
@@ -90,9 +94,9 @@ class Index extends Component {
             <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
               <div className="pt-32 sm:pt-0">
                 <h2 className="font-semibold text-4xl text-gray-700">
-                  Conway Game - A beautiful set of NFTs based on Conway's Game of
-                  life
-              </h2>
+                  Conway Game - A beautiful set of NFTs based on Conway's Game
+                  of life
+                </h2>
                 <p className="mt-4 text-lg leading-relaxed text-gray-600">
                   <a
                     href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
@@ -100,12 +104,12 @@ class Index extends Component {
                     target="_blank"
                   >
                     The Game of Life
-                </a>
-                , also known simply as Life, is a cellular automaton devised by
-                the British mathematician John Horton Conway in 1970. It is a
-                zero-player game, meaning that its evolution is determined by
-                its initial state, requiring no further input.
-              </p>
+                  </a>
+                  , also known simply as Life, is a cellular automaton devised
+                  by the British mathematician John Horton Conway in 1970. It is
+                  a zero-player game, meaning that its evolution is determined
+                  by its initial state, requiring no further input.
+                </p>
                 <div className="mt-12">
                   <RSLink to="BuySectionScroll" spy={true} smooth={true}>
                     <a
@@ -113,7 +117,7 @@ class Index extends Component {
                       className="github-star ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
                     >
                       Buy
-                  </a>
+                    </a>
                   </RSLink>
                 </div>
               </div>
@@ -133,28 +137,32 @@ class Index extends Component {
               <p className="text-4xl text-center">
                 <span role="img" aria-label="love">
                   😍
-              </span>
+                </span>
               </p>
               <h3 className="font-semibold text-3xl">
                 Love Conway game of Life NFT?
-            </h3>
+              </h3>
               <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
                 Cause if you do, it can be yours now. You can also refer this to
                 your friend. Both you and your friend will get 7.5% discount.
-            </p>
+              </p>
               <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                 <BuyProgress totalSold={390} />
               </div>
               <div className="sm:block flex flex-col mt-10">
                 <span
                   className="get-started cursor-pointer text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-2 bg-gray-600 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
-                  onClick={(() => { this.setState({ shareModalOpen: true }) }).bind(this)}
+                  onClick={(() => {
+                    this.setState({ shareModalOpen: true });
+                  }).bind(this)}
                 >
                   Share
-              </span>
+                </span>
                 <span
                   className="github-star cursor-pointer sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
-                  onClick={(() => { this.setState({ buyModalOpen: true }) }).bind(this)}
+                  onClick={(() => {
+                    this.setState({ buyModalOpen: true });
+                  }).bind(this)}
                 >
                   <span>Buy</span>
                 </span>
@@ -207,7 +215,7 @@ class Index extends Component {
                     </svg>
                     <h4 className="text-xl font-bold text-white">
                       Great for your NFTs collection
-                  </h4>
+                    </h4>
                     <p className="text-md font-light mt-2 text-white">
                       The universe of the Game of Life is an infinite,
                       two-dimensional orthogonal grid of square cells, each of
@@ -215,7 +223,7 @@ class Index extends Component {
                       populated and unpopulated, respectively). Every cell
                       interacts with its eight neighbours, which are the cells
                       that are horizontally, vertically, or diagonally adjacent.
-                  </p>
+                    </p>
                   </blockquote>
                 </div>
               </div>
@@ -230,9 +238,9 @@ class Index extends Component {
                           <h6 className="text-xl font-semibold">1</h6>
                         </div>
                         <p className="mb-4 text-gray-600">
-                          Any live cell with fewer than two live neighbours dies,
-                          as if by underpopulation.
-                      </p>
+                          Any live cell with fewer than two live neighbours
+                          dies, as if by underpopulation.
+                        </p>
                       </div>
                     </div>
                     <div className="relative flex flex-col min-w-0">
@@ -242,9 +250,9 @@ class Index extends Component {
                           <h6 className="text-xl font-semibold">2</h6>
                         </div>
                         <p className="mb-4 text-gray-600">
-                          Any live cell with two or three live neighbours lives on
-                          to the next generation.
-                      </p>
+                          Any live cell with two or three live neighbours lives
+                          on to the next generation.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -256,9 +264,9 @@ class Index extends Component {
                           <h6 className="text-xl font-semibold">3</h6>
                         </div>
                         <p className="mb-4 text-gray-600">
-                          Any live cell with more than three live neighbours dies,
-                          as if by overpopulation.
-                      </p>
+                          Any live cell with more than three live neighbours
+                          dies, as if by overpopulation.
+                        </p>
                       </div>
                     </div>
                     <div className="relative flex flex-col min-w-0">
@@ -271,9 +279,9 @@ class Index extends Component {
                         Rule 4
                       </h6>*/}
                         <p className="mb-4 text-gray-600">
-                          Any dead cell with exactly three live neighbours becomes
-                          a live cell, as if by reproduction.
-                      </p>
+                          Any dead cell with exactly three live neighbours
+                          becomes a live cell, as if by reproduction.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -291,13 +299,13 @@ class Index extends Component {
                   </div>
                   <h3 className="text-3xl font-semibold">
                     Complex Documentation
-                </h3>
+                  </h3>
                   <p className="mt-4 text-lg leading-relaxed text-gray-600">
                     This extension comes a lot of fully coded examples that help
-                    you get started faster. You can adjust the colors and also the
-                    programming language. You can change the text and images and
-                    you're good to go.
-                </p>
+                    you get started faster. You can adjust the colors and also
+                    the programming language. You can change the text and images
+                    and you're good to go.
+                  </p>
                   <ul className="list-none mt-6">
                     <li className="py-2">
                       <div className="flex items-center">
@@ -309,7 +317,7 @@ class Index extends Component {
                         <div>
                           <h4 className="text-gray-600">
                             Built by Developers for Developers
-                        </h4>
+                          </h4>
                         </div>
                       </div>
                     </li>
@@ -323,7 +331,7 @@ class Index extends Component {
                         <div>
                           <h4 className="text-gray-600">
                             Carefully crafted code for Components
-                        </h4>
+                          </h4>
                         </div>
                       </div>
                     </li>
@@ -337,7 +345,7 @@ class Index extends Component {
                         <div>
                           <h4 className="text-gray-600">
                             Dynamic Javascript Components
-                        </h4>
+                          </h4>
                         </div>
                       </div>
                     </li>
@@ -374,7 +382,7 @@ class Index extends Component {
                   <div className="w-full lg:w-4/12 px-4">
                     <h5 className="text-xl font-semibold pb-4 text-center">
                       Carnival shuttle
-                  </h5>
+                    </h5>
                     <Link href="/auth/login">
                       <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                         <img
@@ -389,7 +397,7 @@ class Index extends Component {
                   <div className="w-full lg:w-4/12 px-4">
                     <h5 className="text-xl font-semibold pb-4 text-center">
                       Centinal
-                  </h5>
+                    </h5>
                     <Link href="/profile">
                       <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                         <img
@@ -404,7 +412,7 @@ class Index extends Component {
                   <div className="w-full lg:w-4/12 px-4">
                     <h5 className="text-xl font-semibold pb-4 text-center">
                       Diuresis
-                  </h5>
+                    </h5>
                     <Link href="/landing">
                       <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                         <img
@@ -445,8 +453,14 @@ class Index extends Component {
           </div>
         </section>
         <Footer />
-        <ShareModal open={this.state.shareModalOpen} close={this.closeModal.bind(this)} />
-        <BuyModal open={this.state.buyModalOpen} close={this.closeModal.bind(this)} />
+        <ShareModal
+          open={this.state.shareModalOpen}
+          close={this.closeModal.bind(this)}
+        />
+        <BuyModal
+          open={this.state.buyModalOpen}
+          close={this.closeModal.bind(this)}
+        />
       </>
     );
   }
