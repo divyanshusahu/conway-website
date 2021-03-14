@@ -1,20 +1,63 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { Link as RSLink, Element } from "react-scroll";
+import Web3 from 'web3';
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import BuyProgress from "components/ProgressBar/BuyProgress.js";
 import ShareModal from "components/Modals/ShareModal.js";
 import BuyModal from "components/Modals/BuyModal.js";
-
+import { GOL_ABI } from '../blockchain/abi.js';
+import { CHAIN_ID, GOL_ADDRESS } from '../blockchain/constant.js';
+import { getSoldCount } from '../blockchain/gol.js';
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       shareModalOpen: false,
-      buyModalOpen: false
+      buyModalOpen: false,
+      web3: null,
+      gol: null,
+      soldCount: 0,
+      connected: false,
     }
+  }
+
+  async componentWillReceiveProps(p) {
+    if (this.state.web3 != null) {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      this.setState({ connected: true, wallet: accounts[0] })
+      console.log(this.state.wallet)
+    } else {
+      alert('Metamask is not installed')
+    }
+  }
+  componentWillUpdate(nextProps, nextState) {
+  }
+  async componentDidMount() {
+    let _web3 = new Web3(window.ethereum);
+    console.log(await _web3.eth.getChainId())
+    if (CHAIN_ID !== await _web3.eth.getChainId()) {
+      alert('Connected to wrong network, use BSC')
+      return
+    }
+    let s = {
+      web3: _web3,
+      gol: new _web3.eth.Contract(GOL_ABI, GOL_ADDRESS)
+    }
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    s.soldCount = await getSoldCount(s.gol)
+    s.wallet = accounts[0];
+    console.log(s)
+    this.setState(s)
+    window.ethereum.on('accountsChanged', function (accounts) {
+      alert("account changed")
+      this.setState({
+        wallet: accounts[0],
+        connected: true,
+      })
+    })
   }
   closeModal() {
     this.setState({
