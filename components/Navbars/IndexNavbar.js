@@ -46,7 +46,7 @@ export default function Navbar(props) {
               </li>
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              
+
 
               <li className="flex items-center">
                 <a
@@ -64,7 +64,7 @@ export default function Navbar(props) {
                   className="bg-gray-800 text-white active:bg-gray-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
                 >
-                  Connect
+                  {props.address != null ? 'Connected' : 'Connect'}
                 </button>
               </li>
             </ul>

@@ -10,7 +10,7 @@ import ShareModal from "components/Modals/ShareModal.js";
 import BuyModal from "components/Modals/BuyModal.js";
 import { GOL_ABI } from '../blockchain/abi.js';
 import { CHAIN_ID, GOL_ADDRESS } from '../blockchain/constant.js';
-import { getSoldCount } from '../blockchain/gol.js';
+import { getTotalSold, mintGOL } from '../blockchain/gol.js';
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -19,8 +19,9 @@ class Index extends Component {
       buyModalOpen: false,
       web3: null,
       gol: null,
-      soldCount: 0,
+      totalSold: 0,
       connected: false,
+      wallet: null
     }
   }
 
@@ -31,11 +32,21 @@ class Index extends Component {
       console.log(this.state.wallet)
     } else {
       alert('Metamask is not installed')
+      return
     }
   }
   componentWillUpdate(nextProps, nextState) {
   }
+  async buyToken(no, referral = "0x0000000000000000000000000000000000000000") {
+    console.log(this.state)
+    await mintGOL(this.state, no, referral)
+  }
   async componentDidMount() {
+    console.log(window.ethereum)
+    if (typeof window.ethereum == 'undefined') {
+      alert('Metamask is not installed');
+      return
+    };
     let _web3 = new Web3(window.ethereum);
     console.log(await _web3.eth.getChainId())
     if (CHAIN_ID !== await _web3.eth.getChainId()) {
@@ -47,10 +58,14 @@ class Index extends Component {
       gol: new _web3.eth.Contract(GOL_ABI, GOL_ADDRESS)
     }
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    s.soldCount = await getSoldCount(s.gol)
+    s.totalSold = await getTotalSold(s.gol)
     s.wallet = accounts[0];
     console.log(s)
     this.setState(s)
+    console.log(_web3.currentProvider)
+    // _web3.currentProvider.publicConfigStore.on('update', (data) => {
+    //   console.log(data)
+    // });
     window.ethereum.on('accountsChanged', function (accounts) {
       alert("account changed")
       this.setState({
@@ -58,6 +73,7 @@ class Index extends Component {
         connected: true,
       })
     })
+    // await this.buyToken(1)
   }
   closeModal() {
     this.setState({
@@ -68,7 +84,7 @@ class Index extends Component {
   render() {
     return (
       <>
-        <IndexNavbar fixed />
+        <IndexNavbar fixed address={this.state.wallet} />
         <section className="header relative pt-16 items-center flex h-screen max-h-860-px">
           <div className="container mx-auto items-center flex flex-wrap">
             <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
