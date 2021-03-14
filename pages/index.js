@@ -5,8 +5,18 @@ import { Link as RSLink, Element } from "react-scroll";
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import BuyProgress from "components/ProgressBar/BuyProgress.js";
+import ShareModal from "components/Modals/ShareModal.js";
+import BuyModal from "components/Modals/BuyModal.js";
 
 export default function Index() {
+  const [shareModalOpen, setShareModalOpen] = React.useState(false);
+  const [buyModalOpen, setBuyModalOpen] = React.useState(false);
+
+  const closeModal = () => {
+    setShareModalOpen(false);
+    setBuyModalOpen(false);
+  };
+
   return (
     <>
       <IndexNavbar fixed />
@@ -71,18 +81,18 @@ export default function Index() {
               <BuyProgress width={25} />
             </div>
             <div className="sm:block flex flex-col mt-10">
-              <a
-                href="#"
-                className="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-2 bg-gray-600 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+              <span
+                className="get-started cursor-pointer text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-2 bg-gray-600 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+                onClick={() => setShareModalOpen(true)}
               >
                 Share
-              </a>
-              <a
-                href="#"
-                className="github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
+              </span>
+              <span
+                className="github-star cursor-pointer sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
+                onClick={() => setBuyModalOpen(true)}
               >
                 <span>Buy</span>
-              </a>
+              </span>
             </div>
             <div className="text-center mt-16"></div>
           </div>
@@ -375,6 +385,8 @@ export default function Index() {
         </div>
       </section>
       <Footer />
+      <ShareModal open={shareModalOpen} close={closeModal} />
+      <BuyModal open={buyModalOpen} close={closeModal} />
     </>
   );
 }
