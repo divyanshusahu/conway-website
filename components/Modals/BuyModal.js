@@ -22,8 +22,8 @@ export default function BuyModal(props) {
             </div>
             {/*body*/}
             <div className="relative p-6 flex-auto">
-              <div class="mb-3 pt-0">
-                <div class="mb-3 pt-0">
+              <div className="mb-3 pt-0">
+                <div className="mb-3 pt-0">
                   <input
                     type="text"
                     placeholder="Current Price"
@@ -32,7 +32,7 @@ export default function BuyModal(props) {
                     disabled
                   />
                 </div>
-                <div class="mb-3 pt-0">
+                <div className="mb-3 pt-0">
                   <input
                     type="text"
                     placeholder="Referral Address"

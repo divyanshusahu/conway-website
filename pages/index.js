@@ -127,7 +127,7 @@ class Index extends Component {
                 your friend. Both you and your friend will get 7.5% discount.
             </p>
               <div style={{ marginTop: "8px", marginBottom: "8px" }}>
-                <BuyProgress width={25} />
+                <BuyProgress totalSold={390} />
               </div>
               <div className="sm:block flex flex-col mt-10">
                 <span
