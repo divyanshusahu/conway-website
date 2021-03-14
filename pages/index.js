@@ -140,7 +140,7 @@ class Index extends Component {
                 </span>
               </p>
               <h3 className="font-semibold text-3xl">
-                Love Conway game of Life NFT?
+                Love Conway Game of Life NFT?
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
                 Cause if you do, it can be yours now. You can also refer this to
@@ -456,6 +456,7 @@ class Index extends Component {
         <ShareModal
           open={this.state.shareModalOpen}
           close={this.closeModal.bind(this)}
+          wallet={this.state.wallet}
         />
         <BuyModal
           open={this.state.buyModalOpen}
