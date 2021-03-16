@@ -5,7 +5,16 @@ module.exports = {
   },
   purge: {
     enabled: true,
-    content: ["./**/*.html", "./*.html", "./**/*.js", "./*.js"],
+    content: [
+      "./public/**/*.html",
+      "./public/*.html",
+      "./src/**/*.js",
+      "./src/*.js",
+      "./src/**/*.html",
+      "./src/*.html",
+      "./public/**/*.js",
+      "./public/*.js",
+    ],
     options: {
       whitelist: [],
     },
