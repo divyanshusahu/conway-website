@@ -1,5 +1,5 @@
-/*eslint-disable*/
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link as RSLink, Element } from "react-scroll";
 import Web3 from "web3";
 
@@ -11,6 +11,7 @@ import BuyProgress from "components/ProgressBar/BuyProgress.js";
 import ShareModal from "components/Modals/ShareModal.js";
 import BuyModal from "components/Modals/BuyModal.js";
 
+import Interface from "../blockchain/interface";
 import { GOL_ABI } from "../blockchain/abi.js";
 import { CHAIN_ID, GOL_ADDRESS } from "../blockchain/constant.js";
 import { getTotalSold, mintGOL } from "../blockchain/gol.js";
@@ -30,25 +31,22 @@ class Index extends Component {
   }
 
   async componentWillReceiveProps(p) {
-    if (this.state.web3 != null) {
+    /*if (this.state.web3 != null) {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
       this.setState({ connected: true, wallet: accounts[0] });
-      console.log(this.state.wallet);
     } else {
       alert("Metamask is not installed");
       return;
-    }
+    }*/
   }
 
   async buyToken(no, referral = "0x0000000000000000000000000000000000000000") {
-    console.log(this.state);
     await mintGOL(this.state, no, referral);
   }
 
   async componentDidMount() {
-    console.log(window.ethereum);
     if (typeof window.ethereum == "undefined") {
       Swal.fire({
         icon: "error",
@@ -57,9 +55,38 @@ class Index extends Component {
       });
       return;
     }
-    let _web3 = new Web3(window.ethereum);
-    console.log(await _web3.eth.getChainId());
-    if (CHAIN_ID !== (await _web3.eth.getChainId())) {
+
+    if (!this.props.interface) {
+      let interfaceObj = new Interface();
+      this.props.dispatch({ type: "INTERFACE", payload: interfaceObj });
+
+      interfaceObj.isConnectedToProperNetwork().then((v) => {
+        if (!v) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Connected to wrong network, use BSC",
+          });
+          return;
+        }
+      });
+
+      interfaceObj.getWalletAddress().then((w) => {
+        this.setState({
+          web3: interfaceObj.web3,
+          gol: interfaceObj.gol,
+          wallet: w,
+        });
+      });
+    } else {
+      const s = this.props.interface;
+      console.log(s);
+      this.setState(s);
+    }
+
+    /*let interface = new Interface();
+    //let _web3 = new Web3(window.ethereum);
+    if (!interface.isConnectedToProperNetwork()) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -67,29 +94,23 @@ class Index extends Component {
       });
       return;
     }
-    let s = {
-      web3: _web3,
-      gol: new _web3.eth.Contract(GOL_ABI, GOL_ADDRESS),
-    };
+    //let s = {
+    //  web3: _web3,
+    //  gol: new _web3.eth.Contract(GOL_ABI, GOL_ADDRESS),
+    //};
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
     s.totalSold = await getTotalSold(s.gol);
     s.wallet = accounts[0];
-    console.log(s);
     this.setState(s);
-    console.log(_web3.currentProvider);
-    // _web3.currentProvider.publicConfigStore.on('update', (data) => {
-    //   console.log(data)
-    // });
     window.ethereum.on("accountsChanged", function (accounts) {
       alert("account changed");
       this.setState({
         wallet: accounts[0],
         connected: true,
       });
-    });
-    // await this.buyToken(1)
+    });*/
   }
 
   closeModal() {
@@ -116,6 +137,7 @@ class Index extends Component {
                     href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
                     className="text-gray-700"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     The Game of Life
                   </a>
@@ -168,17 +190,17 @@ class Index extends Component {
               <div className="sm:block flex flex-col mt-10">
                 <span
                   className="get-started cursor-pointer text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-2 bg-blue-500 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
-                  onClick={(() => {
+                  onClick={() => {
                     this.setState({ shareModalOpen: true });
-                  }).bind(this)}
+                  }}
                 >
                   Share
                 </span>
                 <span
                   className="github-star cursor-pointer sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
-                  onClick={(() => {
+                  onClick={() => {
                     this.setState({ buyModalOpen: true });
-                  }).bind(this)}
+                  }}
                 >
                   <span>Buy</span>
                 </span>
@@ -477,4 +499,14 @@ class Index extends Component {
   }
 }
 
-export default Index;
+const mapStateToProps = (state) => {
+  return {
+    interface: state.interface,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return { dispatch };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
