@@ -29,7 +29,7 @@ export default function ShareModal(props) {
             <div className="relative p-6 flex-auto">
               {props.wallet ? (
                 <>
-                  <p className="text-sm text-gray-800 mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Copy this URL and share it with your friends.
                   </p>
                   <div className="mb-3 pt-0">
@@ -41,7 +41,7 @@ export default function ShareModal(props) {
                   </div>
                 </>
               ) : (
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-gray-600">
                   Please connect your wallet
                 </p>
               )}

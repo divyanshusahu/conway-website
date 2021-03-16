@@ -1,8 +1,9 @@
 /*eslint-disable*/
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Link as RSLink, Element } from "react-scroll";
 import Web3 from "web3";
+
+import Swal from "sweetalert2";
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
@@ -49,13 +50,21 @@ class Index extends Component {
   async componentDidMount() {
     console.log(window.ethereum);
     if (typeof window.ethereum == "undefined") {
-      alert("Metamask is not installed");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Metamask not installed",
+      });
       return;
     }
     let _web3 = new Web3(window.ethereum);
     console.log(await _web3.eth.getChainId());
     if (CHAIN_ID !== (await _web3.eth.getChainId())) {
-      alert("Connected to wrong network, use BSC");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Connected to wrong network, use BSC",
+      });
       return;
     }
     let s = {
