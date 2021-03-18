@@ -9,6 +9,11 @@ const rootReducer = (state = initialState, action) => {
       newState["interface"] = action.payload;
       return newState;
     }
+    case "SETWALLET": {
+      const newState = { ...state };
+      newState["walletAddress"] = action.payload;
+      return newState;
+    }
     default:
       return state;
   }

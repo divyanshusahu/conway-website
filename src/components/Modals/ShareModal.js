@@ -41,10 +41,10 @@ export default function ShareModal(props) {
                   </div>
                 </>
               ) : (
-                <p className="text-sm text-gray-600">
-                  Please connect your wallet
-                </p>
-              )}
+                  <p className="text-sm text-gray-600">
+                    Please connect your wallet
+                  </p>
+                )}
             </div>
           </div>
         </div>

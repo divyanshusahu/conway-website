@@ -23,11 +23,12 @@ export function getGOLPrice(ind) {
   return price.dividedBy(10);
 }
 export async function mintGOL(state, no, referral) {
-  let nextIndex = getTotalSold(state.gol);
+  console.log(state)
+  let nextIndex = getTotalSold(state.interface.gol);
   let totalPrice = getGOLPrice(nextIndex).multipliedBy(no);
-  state.gol.methods["mintNFT"](no, referral)
+  state.interface.gol.methods["mintNFT"](no, referral)
     .send({
-      from: state.wallet,
+      from: state.walletAddress,
       value: totalPrice,
     })
     .on("transactionHash", function (hash) {

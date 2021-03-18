@@ -13,8 +13,7 @@ import BuyModal from "components/Modals/BuyModal.js";
 
 import Interface from "../blockchain/interface";
 import { GOL_ABI } from "../blockchain/abi.js";
-import { CHAIN_ID, GOL_ADDRESS } from "../blockchain/constant.js";
-import { getTotalSold, mintGOL } from "../blockchain/gol.js";
+import { getWalletAddress } from "../blockchain/actions.js";
 
 class Index extends Component {
   constructor(props) {
@@ -22,11 +21,7 @@ class Index extends Component {
     this.state = {
       shareModalOpen: false,
       buyModalOpen: false,
-      web3: null,
-      gol: null,
       totalSold: 0,
-      connected: false,
-      wallet: null,
     };
   }
 
@@ -42,9 +37,7 @@ class Index extends Component {
     }*/
   }
 
-  async buyToken(no, referral = "0x0000000000000000000000000000000000000000") {
-    await mintGOL(this.state, no, referral);
-  }
+
 
   async componentDidMount() {
     if (typeof window.ethereum == "undefined") {
@@ -70,30 +63,23 @@ class Index extends Component {
           return;
         }
       });
-
-      interfaceObj.getWalletAddress().then((w) => {
-        this.setState({
-          web3: interfaceObj.web3,
-          gol: interfaceObj.gol,
-          wallet: w,
-        });
-      });
+      getWalletAddress(this.props.dispatch)
     } else {
       const s = this.props.interface;
       console.log(s);
       this.setState(s);
     }
 
-    /*let interface = new Interface();
-    //let _web3 = new Web3(window.ethereum);
-    if (!interface.isConnectedToProperNetwork()) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Connected to wrong network, use BSC",
-      });
-      return;
-    }
+    /* let interface = new Interface();
+    // //let _web3 = new Web3(window.ethereum);
+    // if (!interface.isConnectedToProperNetwork()) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Connected to wrong network, use BSC",
+    //   });
+    //   return;
+    // }
     //let s = {
     //  web3: _web3,
     //  gol: new _web3.eth.Contract(GOL_ABI, GOL_ADDRESS),
@@ -123,7 +109,7 @@ class Index extends Component {
   render() {
     return (
       <>
-        <IndexNavbar fixed wallet={this.state.wallet} />
+        <IndexNavbar fixed />
         <section className="header relative pt-16 items-center flex h-screen max-h-860-px">
           <div className="container mx-auto items-center flex flex-wrap">
             <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
@@ -273,13 +259,13 @@ class Index extends Component {
                         <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
                           {/*<i className="fas fa-sitemap"></i>*/}
                           <h6 className="text-xl font-semibold">1</h6>
-                        </div>
+                        </div >
                         <p className="mb-4 text-gray-600">
                           Any live cell with fewer than two live neighbours
                           dies, as if by underpopulation.
                         </p>
-                      </div>
-                    </div>
+                      </div >
+                    </div >
                     <div className="relative flex flex-col min-w-0">
                       <div className="px-4 py-5 flex-auto">
                         <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
@@ -292,7 +278,7 @@ class Index extends Component {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </div >
                   <div className="w-full md:w-6/12 px-4">
                     <div className="relative flex flex-col min-w-0 mt-4">
                       <div className="px-4 py-5 flex-auto">
@@ -322,10 +308,10 @@ class Index extends Component {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div >
+              </div >
+            </div >
+          </div >
 
           <div className="container mx-auto px-4 pb-32 pt-48">
             <div className="items-center flex flex-wrap">
@@ -409,7 +395,7 @@ class Index extends Component {
               <h2 className="font-semibold text-4xl">Samples</h2>
             </div>
           </div>
-        </section>
+        </section >
 
         <section className="block relative z-1 bg-gray-700">
           <div className="container mx-auto">
@@ -487,12 +473,12 @@ class Index extends Component {
         <ShareModal
           open={this.state.shareModalOpen}
           close={this.closeModal.bind(this)}
-          wallet={this.state.wallet}
+          wallet={this.props.walletAddress ?
+            this.props.walletAddress : ''}
         />
         <BuyModal
           open={this.state.buyModalOpen}
           close={this.closeModal.bind(this)}
-          wallet={this.state.wallet}
         />
       </>
     );
@@ -502,6 +488,7 @@ class Index extends Component {
 const mapStateToProps = (state) => {
   return {
     interface: state.interface,
+    walletAddress: state.walletAddress
   };
 };
 

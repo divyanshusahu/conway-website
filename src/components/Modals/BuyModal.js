@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
+import { connect } from 'react-redux';
 import queryString from "query-string";
+import { mintGOL } from "../../blockchain/gol.js";
 
 class BuyModal extends Component {
   constructor(props) {
@@ -22,7 +23,11 @@ class BuyModal extends Component {
     const referral = queryString.parse(window.location.search);
     this.setState({ referral: referral.referral });
   }
-
+  async buyToken() {
+    let ref = this.state.referral == "" || !this.state.referral ?
+      "0x0000000000000000000000000000000000000000" : this.state.referral;
+    await mintGOL(this.props, this.state.n, ref);
+  }
   render() {
     if (!this.props.open) return null;
 
@@ -45,7 +50,7 @@ class BuyModal extends Component {
                 </button>
               </div>
               {/*body*/}
-              {this.props.wallet ? (
+              {this.props.walletAddress ? (
                 <div className="relative p-6 flex-auto">
                   <p className="text-sm text-gray-600 mb-4">
                     You can buy a total of 10 NFTs at a time.
@@ -85,16 +90,17 @@ class BuyModal extends Component {
                     <button
                       className="bg-green-500 text-white active:bg-gray-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
                       type="submit"
+                      onClick={this.buyToken.bind(this)}
                     >
                       Buy
                     </button>
                   </form>
                 </div>
               ) : (
-                <p className="relative p-6 flex-auto text-sm text-gray-800">
-                  Please connect your wallet
-                </p>
-              )}
+                  <p className="relative p-6 flex-auto text-sm text-gray-800">
+                    Please connect your wallet
+                  </p>
+                )}
             </div>
           </div>
         </div>
@@ -104,4 +110,15 @@ class BuyModal extends Component {
   }
 }
 
-export default BuyModal;
+const mapStateToProps = (state) => {
+  return {
+    interface: state.interface,
+    walletAddress: state.walletAddress
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return { dispatch };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyModal);
