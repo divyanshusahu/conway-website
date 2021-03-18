@@ -1,31 +1,29 @@
 import BigNumber from "bignumber.js";
 
-export async function getTotalSold(contract) {
+export async function getTotalMinted(contract) {
   return await contract.methods["totalSupply"]().call();
 }
 export function getGOLPrice(ind) {
   let price = new BigNumber(10).pow(18);
   if (ind < 125) {
-    price.multipliedBy(6);
+    price = price.multipliedBy(6);
   } else if (ind < 225) {
-    price.multipliedBy(12);
+    price = price.multipliedBy(12);
   } else if (ind < 300) {
-    price.multipliedBy(18);
+    price = price.multipliedBy(18);
   } else if (ind < 350) {
-    price.multipliedBy(25);
+    price = price.multipliedBy(25);
   } else if (ind < 375) {
-    price.multipliedBy(35);
+    price = price.multipliedBy(35);
   } else if (ind < 385) {
-    price.multipliedBy(50);
+    price = price.multipliedBy(50);
   } else {
-    price.multipliedBy(100);
+    price = price.multipliedBy(100);
   }
   return price.dividedBy(10);
 }
-export async function mintGOL(state, no, referral) {
-  console.log(state)
-  let nextIndex = getTotalSold(state.interface.gol);
-  let totalPrice = getGOLPrice(nextIndex).multipliedBy(no);
+export function mintGOL(state, no, tm, referral) {
+  let totalPrice = getGOLPrice(tm).multipliedBy(no);
   state.interface.gol.methods["mintNFT"](no, referral)
     .send({
       from: state.walletAddress,

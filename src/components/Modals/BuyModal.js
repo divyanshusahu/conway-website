@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import queryString from "query-string";
-import { mintGOL } from "../../blockchain/gol.js";
+import { mintGOL, getGOLPrice } from "../../blockchain/gol.js";
+import { setTotalMinted } from "../../blockchain/actions.js";
+import BigNumber from "bignumber.js";
 
 class BuyModal extends Component {
   constructor(props) {
@@ -18,15 +20,26 @@ class BuyModal extends Component {
   onSubmit = (event) => {
     event.preventDefault();
   };
-
+  componentWillReceiveProps(p) {
+    if (p.interface) {
+      let decimal = new BigNumber('10').pow(18);
+      // console.log(getGOLPrice(p.totalMinted))
+      this.setState({ price: getGOLPrice(p.totalMinted).dividedBy(decimal).toFixed(2) })
+    }
+  }
   componentDidMount() {
     const referral = queryString.parse(window.location.search);
     this.setState({ referral: referral.referral });
   }
+  componentDidUpdate() {
+    setTotalMinted(this.props.interface, this.props.dispatch)
+  }
   async buyToken() {
+    let tm = await setTotalMinted(this.props.interface, this.props.dispatch)
+    // console.log(tm)
     let ref = this.state.referral == "" || !this.state.referral ?
       "0x0000000000000000000000000000000000000000" : this.state.referral;
-    await mintGOL(this.props, this.state.n, ref);
+    mintGOL(this.props, this.state.n, tm, ref);
   }
   render() {
     if (!this.props.open) return null;
@@ -55,13 +68,14 @@ class BuyModal extends Component {
                   <p className="text-sm text-gray-600 mb-4">
                     You can buy a total of 10 NFTs at a time.
                   </p>
+                  {console.log(this.state.price * this.state.n)}
                   <form onSubmit={this.onSubmit}>
                     <div className="mb-3 pt-0">
                       <input
                         type="text"
                         placeholder="Current Price"
                         className="px-2 py-1 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
-                        defaultValue={"0.5 BNB"}
+                        value={this.state.price * this.state.n}
                         disabled
                       />
                     </div>
@@ -84,7 +98,11 @@ class BuyModal extends Component {
                         min="1"
                         max="10"
                         value={this.state.n}
-                        onChange={(e) => this.setState({ n: e.target.value })}
+                        onChange={(e) => {
+                          let n = e.target.value;
+                          if (e.target.value > 10) { n = 10; }
+                          this.setState({ n })
+                        }}
                       />
                     </div>
                     <button
@@ -113,7 +131,8 @@ class BuyModal extends Component {
 const mapStateToProps = (state) => {
   return {
     interface: state.interface,
-    walletAddress: state.walletAddress
+    walletAddress: state.walletAddress,
+    totalMinted: state.totalMinted
   };
 };
 

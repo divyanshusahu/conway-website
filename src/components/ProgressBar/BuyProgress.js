@@ -26,9 +26,9 @@ class BuyProgress extends Component {
     this.addBars = this.addBars.bind(this);
   }
 
-  calculateCurrentLevel() {
+  calculateCurrentLevel(x) {
     let l = 0;
-    let x = this.props.totalSold;
+    // let x = totalMinted;
     while (l < levels.length) {
       x = x - levels[l];
       if (x <= 0) {
@@ -48,8 +48,8 @@ class BuyProgress extends Component {
     );
   }
 
-  addBars() {
-    const [currentLevel, currentLevelFilled] = this.calculateCurrentLevel();
+  addBars(totalMinted) {
+    const [currentLevel, currentLevelFilled] = this.calculateCurrentLevel(totalMinted);
     let bars = [];
     let x = 0;
     while (x <= currentLevel) {
@@ -67,10 +67,12 @@ class BuyProgress extends Component {
     }
     return bars;
   }
-
-  componentDidMount() {
-    this.setState({ pb: this.addBars() });
+  componentWillReceiveProps(p) {
+    this.setState({ pb: this.addBars(p.totalMinted) });
   }
+  // componentDidMount() {
+  //   this.setState({ pb: this.addBars(this.props.totalMinted) });
+  // }
 
   render() {
     return (

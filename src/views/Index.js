@@ -13,7 +13,7 @@ import BuyModal from "components/Modals/BuyModal.js";
 
 import Interface from "../blockchain/interface";
 import { GOL_ABI } from "../blockchain/abi.js";
-import { getWalletAddress } from "../blockchain/actions.js";
+import { getWalletAddress, setTotalMinted } from "../blockchain/actions.js";
 
 class Index extends Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class Index extends Component {
     this.state = {
       shareModalOpen: false,
       buyModalOpen: false,
-      totalSold: 0,
     };
   }
 
@@ -64,6 +63,7 @@ class Index extends Component {
         }
       });
       getWalletAddress(this.props.dispatch)
+      // setTotalMinted(interfaceObj, this.props.dispatch)
     } else {
       const s = this.props.interface;
       console.log(s);
@@ -171,7 +171,7 @@ class Index extends Component {
                 your friend. Both you and your friend will get 7.5% discount.
               </p>
               <div style={{ marginTop: "8px", marginBottom: "8px" }}>
-                <BuyProgress totalSold={this.state.totalSold} />
+                <BuyProgress totalMinted={this.props.totalMinted} />
               </div>
               <div className="sm:block flex flex-col mt-10">
                 <span
@@ -488,7 +488,8 @@ class Index extends Component {
 const mapStateToProps = (state) => {
   return {
     interface: state.interface,
-    walletAddress: state.walletAddress
+    walletAddress: state.walletAddress,
+    totalMinted: state.totalMinted
   };
 };
 
