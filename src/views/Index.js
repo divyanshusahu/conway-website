@@ -35,70 +35,6 @@ class Index extends Component {
       return;
     }*/
   }
-
-
-
-  async componentDidMount() {
-    if (typeof window.ethereum == "undefined") {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Metamask not installed",
-      });
-      return;
-    }
-
-    if (!this.props.interface) {
-      let interfaceObj = new Interface();
-      this.props.dispatch({ type: "INTERFACE", payload: interfaceObj });
-
-      interfaceObj.isConnectedToProperNetwork().then((v) => {
-        if (!v) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Connected to wrong network, use BSC",
-          });
-          return;
-        }
-      });
-      getWalletAddress(this.props.dispatch)
-      // setTotalMinted(interfaceObj, this.props.dispatch)
-    } else {
-      const s = this.props.interface;
-      console.log(s);
-      this.setState(s);
-    }
-
-    /* let interface = new Interface();
-    // //let _web3 = new Web3(window.ethereum);
-    // if (!interface.isConnectedToProperNetwork()) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "Connected to wrong network, use BSC",
-    //   });
-    //   return;
-    // }
-    //let s = {
-    //  web3: _web3,
-    //  gol: new _web3.eth.Contract(GOL_ABI, GOL_ADDRESS),
-    //};
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    s.totalSold = await getTotalSold(s.gol);
-    s.wallet = accounts[0];
-    this.setState(s);
-    window.ethereum.on("accountsChanged", function (accounts) {
-      alert("account changed");
-      this.setState({
-        wallet: accounts[0],
-        connected: true,
-      });
-    });*/
-  }
-
   closeModal() {
     this.setState({
       shareModalOpen: false,
@@ -168,7 +104,7 @@ class Index extends Component {
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
                 Cause if you do, it can be yours now. You can also refer this to
-                your friend. Both you and your friend will get 7.5% discount.
+                your friend, he will get 7.5% discount. And you will receive 7.5% commission on sell.
               </p>
               <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                 <BuyProgress totalMinted={this.props.totalMinted} />

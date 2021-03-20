@@ -1,10 +1,14 @@
 /*eslint-disable*/
-import { getWalletAddress } from "blockchain/actions";
-import { TWITTER_HANDLE } from "blockchain/constant";
+import { TWITTER_HANDLE } from "../../blockchain/constant";
 import React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import Interface from "../../blockchain/interface";
+import { getWalletAddress, setTotalMinted } from "../../blockchain/actions.js";
+
 
 class NavBar extends Component {
   constructor(props) {
@@ -15,6 +19,38 @@ class NavBar extends Component {
   }
   setNavBarOpen() {
     this.setState({ navbarOpen: !this.state.navbarOpen })
+  }
+  async componentDidMount() {
+    if (typeof window.ethereum == "undefined") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Metamask not installed",
+      });
+      return;
+    }
+
+    if (!this.props.interface) {
+      let interfaceObj = new Interface();
+      this.props.dispatch({ type: "INTERFACE", payload: interfaceObj });
+
+      interfaceObj.isConnectedToProperNetwork().then((v) => {
+        if (!v) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Connected to wrong network, use BSC",
+          });
+          return;
+        }
+      });
+      getWalletAddress(this.props.dispatch)
+      // setTotalMinted(interfaceObj, this.props.dispatch)
+    } else {
+      const s = this.props.interface;
+      console.log(s);
+      this.setState(s);
+    }
   }
   render() {
     return (
@@ -47,23 +83,32 @@ class NavBar extends Component {
                 <li className="flex items-center">
                   <a
                     className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                    href="/faq"
-                  >
-                    <i className="text-gray-500 far fa-file-alt text-lg leading-lg mr-2" />{" "}
-                  FAQ
-                </a>
-                </li>
-              </ul>
-              <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-                <li className="flex items-center">
-                  <a
-                    className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                     href={`https://twitter.com/${TWITTER_HANDLE}`}
                     target="_blank"
                   >
                     <i className="text-gray-500 fab fa-twitter text-lg leading-lg " />
                     <span className="lg:hidden inline-block ml-2">Tweet</span>
                   </a>
+                </li>
+              </ul>
+              <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+
+                <li className="flex items-center">
+                  <a
+                    className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                    href="/#/faq"
+                  >
+                    <i className="text-gray-500 far fa-file-alt text-lg leading-lg mr-2" />{" "}
+                  FAQ
+                </a>
+                </li><li className="flex items-center">
+                  <a
+                    className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                    href="/#/profile"
+                  >
+                    {/* <i className="text-gray-500 far fa-file-alt text-lg leading-lg mr-2" />{" "} */}
+                  My Collection
+                </a>
                 </li>
                 <li className="flex items-center">
                   <button disabled={this.props.walletAddress} onClick={() => getWalletAddress(this.props.dispatch)}

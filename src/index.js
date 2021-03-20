@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./redux/store";
@@ -18,10 +18,11 @@ import Auth from "layouts/Auth.js";
 import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
 import Index from "views/Index.js";
+import FAQ from "views/Faq.js";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         {/* add routes with layouts */}
         <Route path="/admin" component={Admin} />
@@ -30,10 +31,11 @@ ReactDOM.render(
         <Route path="/landing" exact component={Landing} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/" exact component={Index} />
+        <Route path="/faq" exact component={FAQ} />
         {/* add redirect for first page */}
         <Redirect from="*" to="/" />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,7 +1,8 @@
 const initialState = {
   interface: null,
   walletAddress: null,
-  totalMinted: 0
+  totalMinted: 0,
+  userTokens: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const rootReducer = (state = initialState, action) => {
     case "TOTALMINTED": {
       const newState = { ...state };
       newState["totalMinted"] = action.payload;
+      return newState;
+    }
+    case "USERTOKENS": {
+      const newState = { ...state };
+      newState["userTokens"] = action.payload;
       return newState;
     }
     default:
