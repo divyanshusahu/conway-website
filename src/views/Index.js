@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link as RSLink, Element } from "react-scroll";
-import Web3 from "web3";
 
 import Swal from "sweetalert2";
 
@@ -11,9 +10,6 @@ import BuyProgress from "components/ProgressBar/BuyProgress.js";
 import ShareModal from "components/Modals/ShareModal.js";
 import BuyModal from "components/Modals/BuyModal.js";
 
-import Interface from "../blockchain/interface";
-import { GOL_ABI } from "../blockchain/abi.js";
-import { getWalletAddress, setTotalMinted } from "../blockchain/actions.js";
 
 class Index extends Component {
   constructor(props) {
@@ -51,7 +47,7 @@ class Index extends Component {
             <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
               <div className="pt-32 sm:pt-0">
                 <h2 className="font-semibold text-4xl text-gray-700">
-                  Conway Game - A beautiful set of NFTs based on Conway's Game
+                  Mystic Game - A beautiful set of NFTs based on Conway's Game
                   of life
                 </h2>
                 <p className="mt-4 text-lg leading-relaxed text-gray-600">
@@ -100,11 +96,14 @@ class Index extends Component {
                 </span>
               </p>
               <h3 className="font-semibold text-3xl">
-                Love Conway Game of Life NFT?
+                Love Mystic Game of Life NFT?
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
                 Cause if you do, it can be yours now. You can also refer this to
                 your friend, he will get 7.5% discount. And you will receive 7.5% commission on sell.
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
+                Minted: {this.props.totalMinted}/390
               </p>
               <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                 <BuyProgress totalMinted={this.props.totalMinted} />
@@ -157,7 +156,7 @@ class Index extends Component {
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-blue-600">
                   <img
                     alt="..."
-                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                    src="/thumbnail.png"
                     className="w-full align-middle rounded-t-lg"
                   />
                   <blockquote className="relative p-8 mb-4">
@@ -188,6 +187,9 @@ class Index extends Component {
               </div>
 
               <div className="w-full md:w-6/12 px-4">
+                <h2 className="font-semibold text-4xl text-gray-700">
+                  Mystic Game of life: RULES
+                </h2>
                 <div className="flex flex-wrap">
                   <div className="w-full md:w-6/12 px-4">
                     <div className="relative flex flex-col mt-4">
@@ -254,28 +256,25 @@ class Index extends Component {
               <div className="w-full md:w-5/12 ml-auto px-12 md:px-4">
                 <div className="md:pr-12">
                   <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
-                    <i className="fas fa-file-alt text-xl"></i>
+                    <i className="fas fa-clipboard-list text-xl"></i>
                   </div>
                   <h3 className="text-3xl font-semibold">
-                    Complex Documentation
+                    Mystic Properties
                   </h3>
                   <p className="mt-4 text-lg leading-relaxed text-gray-600">
-                    This extension comes a lot of fully coded examples that help
-                    you get started faster. You can adjust the colors and also
-                    the programming language. You can change the text and images
-                    and you're good to go.
+                    Mystic game of life are generative NFTs, which are inherently unique and differs significantly from each other. The change in generation geo-footprint over time can be oscillatory, chaotic and objective motion. Other properites are:
                   </p>
                   <ul className="list-none mt-6">
                     <li className="py-2">
                       <div className="flex items-center">
                         <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-600 bg-gray-100 mr-3">
-                            <i className="fas fa-fingerprint"></i>
+                          <span className="text-xs uppercase rounded-full text-gray-600 bg-gray-100 mr-3">
+                            <i className="fas fa-image"></i>
                           </span>
                         </div>
                         <div>
                           <h4 className="text-gray-600">
-                            Built by Developers for Developers
+                            Each minted mystic NFT is unique
                           </h4>
                         </div>
                       </div>
@@ -283,13 +282,13 @@ class Index extends Component {
                     <li className="py-2">
                       <div className="flex items-center">
                         <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-600 bg-gray-100 mr-3">
-                            <i className="fab fa-html5"></i>
+                          <span className="text-xs uppercase rounded-full text-gray-600 bg-gray-100 mr-3">
+                            <i className="fas fa-palette"></i>
                           </span>
                         </div>
                         <div>
                           <h4 className="text-gray-600">
-                            Carefully crafted code for Components
+                            Available in 4 different colors, and grid sizes
                           </h4>
                         </div>
                       </div>
@@ -297,13 +296,13 @@ class Index extends Component {
                     <li className="py-2">
                       <div className="flex items-center">
                         <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-600 bg-gray-100 mr-3">
-                            <i className="far fa-paper-plane"></i>
+                          <span className="text-xs uppercase rounded-full text-gray-600 bg-gray-100 mr-3">
+                            <i className="fas fa-music"></i>
                           </span>
                         </div>
                         <div>
                           <h4 className="text-gray-600">
-                            Dynamic Javascript Components
+                            Mutable Growth Gradient and generative music
                           </h4>
                         </div>
                       </div>
@@ -320,7 +319,7 @@ class Index extends Component {
                     transform:
                       "scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg)",
                   }}
-                  src={require("assets/img/documentation.png")}
+                  src="/cover.png"
                 />
               </div>
             </div>
@@ -328,7 +327,7 @@ class Index extends Component {
 
           <div className="justify-center text-center flex flex-wrap mt-24">
             <div className="w-full md:w-6/12 px-12 md:px-4">
-              <h2 className="font-semibold text-4xl">Samples</h2>
+              <h2 className="font-semibold text-4xl">Rare NFT mints</h2>
             </div>
           </div>
         </section >
@@ -340,39 +339,39 @@ class Index extends Component {
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-4/12 px-4">
                     <h5 className="text-xl font-semibold pb-4 text-center">
-                      Carnival shuttle
+                      Blicker fuse
                     </h5>
                     <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                       <img
                         alt="..."
                         className="align-middle border-none max-w-full h-auto rounded-lg"
-                        src={require("assets/img/login.jpg")}
+                        src="./sample1.gif"
                       />
                     </div>
                   </div>
 
                   <div className="w-full lg:w-4/12 px-4">
                     <h5 className="text-xl font-semibold pb-4 text-center">
-                      Centinal
+                      Mary go-round
                     </h5>
                     <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                       <img
                         alt="..."
                         className="align-middle border-none max-w-full h-auto rounded-lg"
-                        src={require("assets/img/profile.jpg")}
+                        src="/sample2.gif"
                       />
                     </div>
                   </div>
 
                   <div className="w-full lg:w-4/12 px-4">
                     <h5 className="text-xl font-semibold pb-4 text-center">
-                      Diuresis
+                      Bi block puffer
                     </h5>
                     <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                       <img
                         alt="..."
                         className="align-middle border-none max-w-full h-auto rounded-lg"
-                        src={require("assets/img/landing.jpg")}
+                        src="/sample3.gif"
                       />
                     </div>
                   </div>
@@ -384,27 +383,6 @@ class Index extends Component {
 
         <section className="py-20 bg-gray-700 overflow-hidden"></section>
 
-        <section className="pb-16 bg-gray-300 relative pt-32">
-          <div
-            className="-mt-20 top-0 bottom-auto left-0 right-0 w-full absolute h-20"
-            style={{ transform: "translateZ(0)" }}
-          >
-            <svg
-              className="absolute bottom-0 overflow-hidden"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            >
-              <polygon
-                className="text-gray-300 fill-current"
-                points="2560 0 2560 100 0 100"
-              ></polygon>
-            </svg>
-          </div>
-        </section>
         <Footer />
         <ShareModal
           open={this.state.shareModalOpen}

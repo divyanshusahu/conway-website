@@ -1,8 +1,8 @@
 import { now } from 'tone';
 import { Scale } from 'tonal';
 import getInstrument from './get-instrument';
-import { release } from 'os';
-const crypto = require('crypto');
+import hashIndex from '../randomHashIndex';
+
 const ONE_HUNDRED = 100;
 const NOTE_TIME_OFFSET_S = 0.01;
 
@@ -15,18 +15,16 @@ const notes = octaves.reduce(
     },
     []
 );
-let hashIndex = []
-for (let i = 0; i < 1000; i++) {
-    let n = crypto.createHash('sha1').update(i.toString()).digest('hex').substr(10)
-    hashIndex.push(parseInt(n, 16) % notes.length)
-}
+
 console.log(hashIndex)
 const getNoteAtHeight = activeCells => {
+    console.log(activeCells)
+    console.log(notes)
     return Array.from(activeCells).map((e) => {
         return notes[
             Math.min(
                 notes.length - 1,
-                hashIndex[e]
+                hashIndex[e % 1000] % notes.length
             )]
     }
     )

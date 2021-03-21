@@ -1,6 +1,5 @@
 import { Sampler, Filter, Master, Compressor } from 'tone';
 import samples from './samples.js';
-
 const OGG_FORMAT = 'ogg';
 const MP3_FORMAT = 'mp3';
 

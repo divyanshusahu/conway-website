@@ -5,13 +5,13 @@ import getPlayer from './audio/get-player'
 
 
 let colorMap = [
+    { primary: "#CACACA", secondary: "#282828", grid: "#323232" },
+    { primary: "#F4A300", secondary: "#660004", grid: "#4D0003" },
     {
         primary: "#5EB200",
         secondary: "#004366", grid: "#00324D"
     },
-    { primary: "#F4A300", secondary: "#660004", grid: "#4D0003" },
     { primary: "#43004C", secondary: "#E6FFD7", grid: "#B6FF8B" },
-    { primary: "#CACACA", secondary: "#282828", grid: "#323232" },
 ];
 //main component
 class Conway extends Component {
@@ -61,6 +61,7 @@ class Conway extends Component {
             //currently selected pattern		
             activePattern: "random"
         };
+        this.buffer = [];
     }
 
     //generate array of random figures
@@ -96,7 +97,7 @@ class Conway extends Component {
     componentDidMount() {
         var canvas = document.getElementById(this.props.id);
         var ctx = canvas.getContext("2d");
-        let boardD = this.selectSize(this.props.size);
+        let boardD = this.selectSize(this.props.gridSize);
         let speed = this.selectSpeed(this.props.speed);
         boardD.board = this.selectPattern(this.props.pattern, boardD.board);
         this.setState({
@@ -129,7 +130,57 @@ class Conway extends Component {
         ctx.fillRect(25, 5, this.state.canvasSize.width - 50, this.state.canvasSize.height - 10);
     }
 
+    computeBuffer(buffer) {
+        var nextBoard = [];
+        for (var i = 0; i < buffer.length; i++)
+            nextBoard.push(buffer[i].slice(0));
+        let x = buffer.length, y = buffer[0].length;
+        let canAddRow = buffer[buffer.length - 1].reduce((total, cur) => { return total || cur == 1 }, false);
+        if (buffer.length - 2 >= 0)
+            canAddRow = buffer[buffer.length - 2].reduce((total, cur) => { return total || cur == 1 }, canAddRow);
+        for (var i = 0; i < x; i++) {
+            for (var j = 0; j < y; j++) {
+                //analize neighbour cells
+                var count = 0;
+                if (buffer[i][j] == 1)
+                    nextBoard[i][j] = 2;
 
+                for (var m = i - 1; m <= i + 1; m++) {
+                    for (var n = j - 1; n <= j + 1; n++) {
+                        if (m === i && n === j) {
+                            continue;
+                        }
+
+                        var row = m;
+                        var col = n;
+                        if ((0 <= row && row <= buffer.length - 1 &&
+                            0 <= col && col <= buffer[0].length - 1) &&
+                            buffer[row][col] > 0) {
+                            count++;
+                        } else if (row < 0 && col >= 0 && col <= buffer[0].length - 1) {
+                            if (this.state.board[col][0] > 0) {
+                                count++;
+                            }
+
+                        } else if (canAddRow && row > nextBoard.length - 1) {
+                            nextBoard.push(Array(buffer[0].length));
+                            nextBoard.push(Array(buffer[0].length));
+                        }
+                        // }
+                    }
+                }
+
+                //the cell must die
+                if (count < 2 || count > 3)
+                    nextBoard[i][j] = 0;
+                //if the cell is dead - make reincarnation!	          	
+                else if (count == 3 && buffer[i][j] === 0) {
+                    nextBoard[i][j] = 1;
+                }
+            }
+        }
+        return nextBoard;
+    }
     //caller - string parameter - to identify where the function is called from
     draw(caller) {
         setTimeout(function () {
@@ -170,13 +221,12 @@ class Conway extends Component {
                 nextBoard.push(board[i].slice(0));
 
             //how many 'alive' cells are in the board?
-            var aliveCells = 0;
             let active = new Set();
             for (var i = 0; i < nextBoard.length; i++) {
                 for (var j = 0; j < nextBoard[i].length; j++) {
 
-                    if (board[i][j] > 0)
-                        aliveCells++;
+                    // if (board[i][j] > 0)
+                    //     aliveCells++;
 
                     //analize neighbour cells
                     var count = 0;
@@ -207,6 +257,17 @@ class Conway extends Component {
                                     0 <= col && col <= board[0].length - 1)) &&
                                 board[row][col] > 0) {
                                 count++;
+                            } else if (!this.props.confined && col < 0 &&
+                                0 <= row && row <= board.length - 1) {
+                                if (this.buffer.length == 0) {
+                                    //no of rows of original board
+                                    this.buffer.push(Array(board.length));
+                                    this.buffer.push(Array(board.length));
+                                }
+                                if (this.buffer[0][row] > 0) {
+                                    count++;
+                                }
+
                             }
                             // }
                         }
@@ -223,6 +284,10 @@ class Conway extends Component {
                     }
                 }
             }
+            console.log(active)
+            if (active.size > 0 && this.buffer.length < 50) {
+                this.buffer = this.computeBuffer(this.buffer)
+            }
             if (this.state.playing && this.state.player && active.size > 0) {
                 // console.log(this.state.player)
                 this.state.player(active, (this.state.speed / 1000) * 1.5)
@@ -230,11 +295,12 @@ class Conway extends Component {
 
 
             //all the cells are 'dead', stop the game
-            if (!aliveCells) {
+            if (active.size == 0) {
                 return;
             }
 
             //if the function called not from click handler - update state
+            // only present when the shouldLoop is false
             if (caller != "handleCanvasClick")
                 this.setState({ board: nextBoard, step: this.state.step + 1 });
 
@@ -270,7 +336,7 @@ class Conway extends Component {
     getXYSize() {
         let _size = this.props.xyNo.split('x')
         _size = _size.map((e) => parseInt(e));
-        let dimensions = this.props.size.split('x')
+        let dimensions = this.props.gridSize.split('x')
         dimensions = dimensions.map((e) => parseInt(e));
         let xs = (dimensions[0] * 10) / _size[0]
         let ys = (dimensions[1] * 10) / _size[1]
@@ -386,7 +452,7 @@ class Conway extends Component {
     //run button onClick handler
     //clear the board and reset the game
     clear() {
-        let boardD = this.selectSize(this.props.size);
+        let boardD = this.selectSize(this.props.gridSize);
         let initBoard = this.selectPattern(this.props.pattern, boardD.board);
         this.setState({
             step: 0,
@@ -401,6 +467,7 @@ class Conway extends Component {
             activePattern: "clear board"
 
         }, () => { this.draw() });
+        this.buffer = [];
     }
 
 
@@ -443,7 +510,9 @@ class Conway extends Component {
             if (!this.state.board[i][j]) {
                 var newBoard = this.state.board.slice(0);
                 newBoard[i][j] = 1;
-                this.setState({ board: newBoard }, this.draw("handleCanvasClick"));
+                this.setState({ board: newBoard }, (() => {
+                    if (!this.state.shouldLoop) this.draw("handleCanvasClick")
+                }).bind(this));
             }
         }
     }
@@ -498,7 +567,7 @@ class Conway extends Component {
                         <button onClick={this.motion.bind(this)} style={{ padding: '2px' }}>
                             {this.state.shouldLoop ?
 
-                                <i className="text-black fas fa-stop-circle" /> :
+                                <i className="text-black fas fa-pause" /> :
                                 <i className="text-black fas fa-play" />
                             }
                         </button>

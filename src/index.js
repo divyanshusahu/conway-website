@@ -19,6 +19,7 @@ import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
 import Index from "views/Index.js";
 import FAQ from "views/Faq.js";
+import TOC from "views/TOC.js";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -32,6 +33,7 @@ ReactDOM.render(
         <Route path="/profile" exact component={Profile} />
         <Route path="/" exact component={Index} />
         <Route path="/faq" exact component={FAQ} />
+        <Route path="/toc" exact component={TOC} />
         {/* add redirect for first page */}
         <Redirect from="*" to="/" />
       </Switch>

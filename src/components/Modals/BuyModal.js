@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import queryString from "query-string";
 import { mintGOL, getGOLPrice } from "../../blockchain/gol.js";
 import { setTotalMinted } from "../../blockchain/actions.js";
+import { DEFAULT_ADDR } from "../../blockchain/constant.js";
 import BigNumber from "bignumber.js";
 
 class BuyModal extends Component {
@@ -11,7 +12,7 @@ class BuyModal extends Component {
 
     this.state = {
       price: 0,
-      referral: "",
+      referral: DEFAULT_ADDR,
       n: 1,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -22,24 +23,26 @@ class BuyModal extends Component {
   };
   componentWillReceiveProps(p) {
     if (p.interface) {
-      let decimal = new BigNumber('10').pow(18);
-      // console.log(getGOLPrice(p.totalMinted))
-      this.setState({ price: getGOLPrice(p.totalMinted).dividedBy(decimal).toFixed(2) })
+      this.setState({ price: this.getPrice(p.totalMinted, this.state.referral) })
     }
   }
+  getPrice(totalMinted, referral) {
+    let decimal = new BigNumber('10').pow(18);
+    return getGOLPrice(totalMinted, referral).dividedBy(decimal).toFixed(2)
+  }
   componentDidMount() {
-    const referral = queryString.parse(window.location.search);
-    this.setState({ referral: referral.referral });
+    const ref = queryString.parse(window.location.search);
+    let referral = typeof ref.referral == 'undefined' ? '' : ref.referral;
+    this.setState({ referral });
   }
   componentDidUpdate() {
     setTotalMinted(this.props.interface, this.props.dispatch)
   }
   async buyToken() {
     let tm = await setTotalMinted(this.props.interface, this.props.dispatch)
-    // console.log(tm)
-    let ref = this.state.referral == "" || !this.state.referral ?
-      "0x0000000000000000000000000000000000000000" : this.state.referral;
-    mintGOL(this.props, this.state.n, tm, ref);
+    let referral = this.state.referral == DEFAULT_ADDR || !this.state.referral ?
+      DEFAULT_ADDR : this.state.referral;
+    mintGOL(this.props, this.state.n, tm, referral);
   }
   render() {
     if (!this.props.open) return null;
@@ -71,6 +74,7 @@ class BuyModal extends Component {
                   {console.log(this.state.price * this.state.n)}
                   <form onSubmit={this.onSubmit}>
                     <div className="mb-3 pt-0">
+                      <span className="ext-sm text-gray-600">Total Price</span>
                       <input
                         type="text"
                         placeholder="Current Price"
@@ -80,17 +84,24 @@ class BuyModal extends Component {
                       />
                     </div>
                     <div className="mb-3 pt-0">
+                      <span className="ext-sm text-gray-600">Referral</span>
                       <input
                         type="text"
                         placeholder="Referral Address"
                         className="px-2 py-1 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
                         value={this.state.referral}
-                        onChange={(e) =>
-                          this.setState({ referral: e.target.value })
+                        onChange={((e) => {
+                          if (e.target.value.length != 42 && e.target.value.length != 0) return;
+                          this.setState({
+                            referral: e.target.value,
+                            price: this.getPrice(this.props.totalMinted, e.target.value)
+                          })
+                        }).bind(this)
                         }
                       />
                     </div>
                     <div className="mb-3 pt-0">
+                      <span className="ext-sm text-gray-600">No of MysticGol</span>
                       <input
                         type="number"
                         placeholder="Total NFTs"

@@ -1501,6 +1501,10 @@ video {
   list-style-type: none;
 }
 
+.ul>li {
+  list-style-type: circle;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -2230,6 +2234,9 @@ video {
   --text-opacity: 1;
   color: #cbd5e0;
   color: rgba(203, 213, 224, var(--text-opacity));
+}
+.hover\:underline:hover {
+  text-decoration: underline;
 }
 
 .hover\:text-gray-600:hover {

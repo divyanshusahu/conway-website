@@ -62,7 +62,7 @@ class NavBar extends Component {
                 to="/"
                 className="text-gray-800 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase"
               >
-                Game of Life
+                Msytic Game of Life
             </Link>
               <button
                 className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -79,7 +79,7 @@ class NavBar extends Component {
               }
               id="example-navbar-warning"
             >
-              <ul className="flex flex-col lg:flex-row list-none mr-auto">
+              {/* <ul className="flex flex-col lg:flex-row list-none mr-auto">
                 <li className="flex items-center">
                   <a
                     className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -90,7 +90,7 @@ class NavBar extends Component {
                     <span className="lg:hidden inline-block ml-2">Tweet</span>
                   </a>
                 </li>
-              </ul>
+              </ul> */}
               <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
 
                 <li className="flex items-center">
@@ -98,8 +98,7 @@ class NavBar extends Component {
                     className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                     href="/#/faq"
                   >
-                    <i className="text-gray-500 far fa-file-alt text-lg leading-lg mr-2" />{" "}
-                  FAQ
+                    FAQ
                 </a>
                 </li><li className="flex items-center">
                   <a
