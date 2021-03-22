@@ -39,7 +39,7 @@ class Profile extends Component {
               <div className="flex flex-wrap" style={{ justifyContent: 'space-around' }}>
                 {this.props.userTokens.map((tokenId) => {
                   let details = getTokenDetails(tokenId);
-                  return <Conway gridSize={details.gridSize} color={details.color} xyNo={details.xyNo} speed={details.speed} key={tokenId} pattern={details.pattern} id={`ts${tokenId}`} confined={false} />
+                  return <Conway gridSize={details.gridSize} color={details.color} xyNo={details.xyNo} speed={details.speed} key={tokenId} name={details.name} pattern={details.pattern} id={`ts${tokenId}`} confined={details.confined} />
                 }
                 )}
               </div>
@@ -53,6 +53,7 @@ class Profile extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.userTokens)
   return {
     interface: state.interface,
     walletAddress: state.walletAddress,

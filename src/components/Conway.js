@@ -99,7 +99,7 @@ class Conway extends Component {
         var ctx = canvas.getContext("2d");
         let boardD = this.selectSize(this.props.gridSize);
         let speed = this.selectSpeed(this.props.speed);
-        boardD.board = this.selectPattern(this.props.pattern, boardD.board);
+        boardD.board = this.selectPattern(boardD.board);
         this.setState({
             canvas: canvas,
             context: ctx,
@@ -284,8 +284,8 @@ class Conway extends Component {
                     }
                 }
             }
-            console.log(active)
-            if (active.size > 0 && this.buffer.length < 50) {
+            // console.log(active)
+            if (active.size > 0 && 0 < this.buffer.length && this.buffer.length < 50) {
                 this.buffer = this.computeBuffer(this.buffer)
             }
             if (this.state.playing && this.state.player && active.size > 0) {
@@ -359,76 +359,31 @@ class Conway extends Component {
     }
 
     //select pattern onChange listener
-    selectPattern(pattern, board) {
+    selectPattern(board) {
         //pause the game 
         this.setState({ shouldDraw: false, shouldLoop: false });
-        var array = null;
-        var buttons = null;
-        switch (pattern) {
-            //get array filled with 0 and 1 randomly
-            case "random":
-                array = this.getRandomArray(board[0].length,
-                    board.length);
-                break;
-            //clear array - user gets empty board	
-            case "clear board":
-                array = [];
-                for (var i = 0; i < board.length; i++) {
-                    var row = [];
-                    for (var j = 0; j < board[0].length; j++) {
-                        row.push(0);
-                    }
-                    array.push(row);
-                }
-                buttons = {
-                    run: false,
-                    clear: true,
-                    pause: false
-                };
-                break;
-            //get array filled by pattern	
-            default:
-
-                array = this.getCleanArray(board);
-                var p = Patterns[pattern];
-                let temp = [];
-                let r = [];
-                for (let i of p) {
-                    if (i == '.') {
-                        r.push(0);
-                    } else if (i == 'O') {
-                        r.push(1);
-                    } else {
-                        temp.push(r);
-                        r = [];
-                    }
-                }
-                var dRow = Math.floor((board.length - temp.length) / 2);
-                var dCol = Math.floor((board[0].length - temp[0].length) / 2);
-                for (var row = 0; row < temp.length; row++) {
-                    for (var col = 0; col < temp[0].length; col++) {
-                        // console.log(row + dRow, col + dCol, row, col)
-                        array[row + dRow][col + dCol] = temp[row][col];
-                    }
-                }
+        var array = this.getCleanArray(board);;
+        let r = [], temp = [];
+        for (let i of this.props.pattern) {
+            if (i == '.') {
+                r.push(0);
+            } else if (i == 'O') {
+                r.push(1);
+            } else {
+                temp.push(r);
+                r = [];
+            }
         }
+        var dRow = Math.floor((board.length - temp.length) / 2);
+        var dCol = Math.floor((board[0].length - temp[0].length) / 2);
+        for (var row = 0; row < temp.length; row++) {
+            for (var col = 0; col < temp[0].length; col++) {
+                // console.log(row + dRow, col + dCol, row, col)
+                array[row + dRow][col + dCol] = temp[row][col];
+            }
+        }
+        // }
 
-        if (!buttons)
-            buttons = {
-                run: false,
-                clear: false,
-                pause: true
-            };
-
-        // this.setState({
-        //     activePattern: pattern,
-        //     board: array,
-        //     shouldDraw: true,
-        //     shouldLoop: false,
-        //     step: 0,
-        //     activePattern: pattern,
-        //     buttons: buttons
-        // }, () => this.draw());
         return array;
     }
 
@@ -453,7 +408,7 @@ class Conway extends Component {
     //clear the board and reset the game
     clear() {
         let boardD = this.selectSize(this.props.gridSize);
-        let initBoard = this.selectPattern(this.props.pattern, boardD.board);
+        let initBoard = this.selectPattern(boardD.board);
         this.setState({
             step: 0,
             board: initBoard,
@@ -562,7 +517,7 @@ class Conway extends Component {
         return (
             <div id="gameBox" style={divWidth} className="my-4  bg-white">
                 <div style={{ padding: '5px 20px 10px', fontWeight: 'bold' }}>
-                    <span style={{ color: '#777', fontWeight: 'bold' }}>Name: {this.props.pattern}</span>
+                    <span style={{ color: '#777', fontWeight: 'bold' }}>Name: {this.props.name}</span>
                     <div style={{ float: 'right', marginRight: '3px' }}>
                         <button onClick={this.motion.bind(this)} style={{ padding: '2px' }}>
                             {this.state.shouldLoop ?
