@@ -219,14 +219,14 @@ class Conway extends Component {
             var nextBoard = [];
             for (var i = 0; i < board.length; i++)
                 nextBoard.push(board[i].slice(0));
-
+            let aliveCells = 0;
             //how many 'alive' cells are in the board?
             let active = new Set();
             for (var i = 0; i < nextBoard.length; i++) {
                 for (var j = 0; j < nextBoard[i].length; j++) {
 
-                    // if (board[i][j] > 0)
-                    //     aliveCells++;
+                    if (board[i][j] > 0)
+                        aliveCells++;
 
                     //analize neighbour cells
                     var count = 0;
@@ -295,7 +295,7 @@ class Conway extends Component {
 
 
             //all the cells are 'dead', stop the game
-            if (active.size == 0) {
+            if (!aliveCells) {
                 return;
             }
 
@@ -495,7 +495,7 @@ class Conway extends Component {
     }
     export() {
         let p = "";
-        // console.log(this.state.board)
+
         for (let row of this.state.board) {
             let isNotEmpty = 0;
             let str_r = "";

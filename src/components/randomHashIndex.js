@@ -38,7 +38,7 @@ export function getTokenDetails(tokenId) {
     let color = getColor(tokenId);
     color = 3;
     let xNo = 30, yNo = 20;
-
+    tokenId = Math.min(tokenId, patternNames.length - 1);
     let pName = patternNames[tokenId];
     let p = patternDetails[pName];
     // let divisions = [{ xd: .5, yd: .5 }, { xd: 1, yd: 1 }, { xd: 2, yd: 2 }, { xd: 1.5, yd: 1.5 }, { xd: 2.5, yd: 2.5 }];
