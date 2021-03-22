@@ -54,15 +54,15 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   let a = [];
-  for (let i = 0; i < 390; i++) {
+  for (let i = 0; i < 618; i++) {
     a.push(i);
   }
   return {
     interface: state.interface,
     walletAddress: state.walletAddress,
     totalMinted: state.totalMinted,
-    // userTokens: a,
-    userTokens: state.userTokens,
+    userTokens: a,
+    // userTokens: state.userTokens,
   };
 };
 

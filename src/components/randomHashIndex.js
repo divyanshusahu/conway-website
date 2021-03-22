@@ -1,4 +1,4 @@
-import patternDetails from './pattern2'
+import patternDetails from './pattern.json'
 const crypto = require('crypto');
 let hashIndex = []
 for (let i = 0; i < 1000; i++) {
@@ -7,7 +7,6 @@ for (let i = 0; i < 1000; i++) {
 }
 function getColor(tokenId) {
     let hash = hashIndex[tokenId] % 16;
-    console.log(hash)
     if (hash < 6) {
         return 0;
     } else if (hash < 11) {
@@ -36,7 +35,6 @@ function getSpeed(tokenId) {
 let patternNames = Object.keys(patternDetails)
 export function getTokenDetails(tokenId) {
     let color = getColor(tokenId);
-    color = 3;
     let xNo = 30, yNo = 20;
     tokenId = Math.min(tokenId, patternNames.length - 1);
     let pName = patternNames[tokenId];

@@ -310,7 +310,7 @@ class Conway extends Component {
             }
 
         }.bind(this), this.state.speed);
-        console.log(this.state.speed);
+        // console.log(this.state.speed);
 
     }
 
@@ -376,11 +376,17 @@ class Conway extends Component {
         }
         var dRow = Math.floor((board.length - temp.length) / 2);
         var dCol = Math.floor((board[0].length - temp[0].length) / 2);
-        for (var row = 0; row < temp.length; row++) {
-            for (var col = 0; col < temp[0].length; col++) {
-                // console.log(row + dRow, col + dCol, row, col)
-                array[row + dRow][col + dCol] = temp[row][col];
+        try {
+            for (var row = 0; row < temp.length; row++) {
+                for (var col = 0; col < temp[0].length; col++) {
+                    // console.log(row + dRow, col + dCol, row, col)
+                    array[row + dRow][col + dCol] = temp[row][col];
+                }
             }
+
+        } catch (e) {
+            // console.log(e)
+            console.log(this.props.name)
         }
         // }
 
