@@ -141,7 +141,7 @@ class Index extends Component {
                   <span>Buy</span>
                 </span>
               </div>
-              <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
+              <p className="text-gray-600 text-lg leading-relaxed mt-8 mb-4">
                 <input
                   className="form-checkbox"
                   style={{ border: "2px solid black" }}
