@@ -11,13 +11,15 @@ import { setTotalMinted } from "../blockchain/actions.js";
 
 class Marketplace extends Component {
   componentDidMount() {
-    toast.dismiss();
     toast.warning("Trading is disabled, only showcasing possible.", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: true,
     });
-    setTotalMinted(this.props.interface, this.props.dispatch);
+    toast.dismiss();
+  }
+  componentWillReceiveProps(props) {
+    if (props.interface) setTotalMinted(props.interface, props.dispatch);
   }
   constructor(props) {
     super(props);
