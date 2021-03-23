@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link as RSLink, Element } from "react-scroll";
+import { ToastContainer } from "react-toastify";
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
@@ -393,6 +394,7 @@ class Index extends Component {
           open={this.state.buyModalOpen}
           close={this.closeModal.bind(this)}
         />
+        <ToastContainer />
       </>
     );
   }

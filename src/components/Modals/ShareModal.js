@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function ShareModal(props) {
   if (!props.open) return null;
@@ -68,8 +68,7 @@ export default function ShareModal(props) {
           </div>
         </div>
       </div>
-      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-      <ToastContainer />
+      <div className="opacity-25 fixed inset-0 z-40 bg-black" />
     </>
   );
 }
