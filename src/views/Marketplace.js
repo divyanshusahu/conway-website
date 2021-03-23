@@ -6,18 +6,18 @@ import Conway from "components/Conway.js";
 // import Operator from "./Operator.js";
 import { connect } from "react-redux";
 import { getTokenDetails } from "../components/randomHashIndex";
-import { toast, ToastContainer } from "react-toastify";
+import WarningAlert from "../components/alerts/WarningAlert";
 import { setTotalMinted } from "../blockchain/actions.js";
 
 class Marketplace extends Component {
-  componentDidMount() {
+  /*componentDidMount() {
     toast.warning("Trading is disabled, only showcasing possible.", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: true,
     });
     toast.dismiss();
-  }
+  }*/
   componentWillReceiveProps(props) {
     if (props.interface) setTotalMinted(props.interface, props.dispatch);
   }
@@ -45,11 +45,14 @@ class Marketplace extends Component {
         ) : (
           <div className="px-6  mx-auto">
             {/* <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-lg" style={{ marginTop: '6rem' }}> */}
-            <div className="px-6 py-24">
+            <div className="pt-24 pb-8 px-6">
+              <WarningAlert text="Trading is disabled for now, only showcasing is available." />
+            </div>
+            <div className="px-6">
               Number of minted Mystic GOL: {this.props.totalMinted}
               {console.log(this.props.totalMinted)}
               <div
-                className="flex flex-wrap"
+                className="flex flex-wrap mb-24"
                 style={{ justifyContent: "space-around" }}
               >
                 {this.props.tokens.map((_, tokenId) => {
@@ -74,7 +77,6 @@ class Marketplace extends Component {
           </div>
         )}
         <Footer />
-        <ToastContainer />
       </>
     );
   }

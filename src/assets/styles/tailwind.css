@@ -1635,6 +1635,10 @@ video {
   margin-top: 1.25rem;
 }
 
+.mr-5 {
+  margin-right: 1.25rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
@@ -1643,12 +1647,20 @@ video {
   margin-top: 1.5rem;
 }
 
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mr-8 {
+  margin-right: 2rem;
 }
 
 .mb-8 {
@@ -1685,6 +1697,10 @@ video {
 
 .mt-32 {
   margin-top: 8rem;
+}
+
+.mb-32 {
+  margin-bottom: 8rem;
 }
 
 .mt-48 {
@@ -1995,6 +2011,10 @@ video {
 
 .pr-12 {
   padding-right: 3rem;
+}
+
+.pb-12 {
+  padding-bottom: 3rem;
 }
 
 .pt-16 {
