@@ -47,6 +47,7 @@ class Profile extends Component {
               >
                 {this.props.userTokens.map((tokenId) => {
                   let details = getTokenDetails(tokenId);
+                  console.log(details);
                   return (
                     <Conway
                       gridSize={details.gridSize}

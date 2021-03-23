@@ -20,7 +20,7 @@ class NavBar extends Component {
   async componentDidMount() {
     if (typeof window.ethereum == "undefined") {
       toast.error("Metamask not installed", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: true,
       });
@@ -34,7 +34,7 @@ class NavBar extends Component {
       interfaceObj.isConnectedToProperNetwork().then((v) => {
         if (!v) {
           toast.error("Connected to wrong network, use BSC", {
-            position: "top-center",
+            position: "top-right",
             autoClose: 3000,
             hideProgressBar: true,
           });

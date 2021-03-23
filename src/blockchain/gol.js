@@ -41,11 +41,11 @@ export function mintGOL(state, no, tm, referral) {
     .on("transactionHash", function (hash) {
       //alert(`Pushed transaction ${hash}`);
       toast.info(`Pushed transaction ${hash}`, {
-        position: "top-center",
-        autoClose: false,
-        hideProgressBar: true,
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
         closeOnClick: false,
-        closeButton: false,
+        closeButton: true,
         style: { wordBreak: "break-word" },
         draggable: false,
       });
@@ -55,17 +55,17 @@ export function mintGOL(state, no, tm, referral) {
         //alert("successfully minted, Refresh plz.");
         toast.dismiss();
         toast.success("Successfully minted. Visit My Collection Page.", {
-          position: "top-center",
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
         });
       }
     })
     .on("error", function (error, receipt) {
-      //alert(error.message);
+      // console.log(error.message)
       toast.dismiss();
-      toast.error("Transaction Failed", {
-        position: "top-center",
+      toast.error(error.message, {
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: true,
       });

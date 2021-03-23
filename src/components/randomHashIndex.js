@@ -62,7 +62,7 @@ export function getTokenDetails(tokenId) {
     speed: getSpeed(tokenId),
     name: pName,
     pattern: p.pattern,
-    confined: typeof p.confined == "undefined" ? true : false,
+    confined: typeof p.confined == "undefined" ? true : p.confined,
   };
   return details;
 }

@@ -15,6 +15,7 @@ class BuyModal extends Component {
       price: 0,
       referral: DEFAULT_ADDR,
       n: 1,
+      balance: "0 BNB",
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -22,12 +23,24 @@ class BuyModal extends Component {
   onSubmit = (event) => {
     event.preventDefault();
   };
+  getBalance() {
+    if (this.props.interface && this.props.walletAddress) {
+      let web3 = this.props.interface.web3;
+      let _this = this;
+      web3.eth.getBalance(this.props.walletAddress, function (err, balance) {
+        _this.setState({
+          balance: web3.utils.fromWei(balance, "ether") + " BNB",
+        });
+      });
+    }
+  }
   componentWillReceiveProps(p) {
     if (p.interface) {
       this.setState({
         price: this.getPrice(p.totalMinted, this.state.referral),
       });
     }
+    this.getBalance();
   }
   getPrice(totalMinted, referral) {
     let decimal = new BigNumber("10").pow(18);
@@ -73,10 +86,12 @@ class BuyModal extends Component {
               {/*body*/}
               {this.props.walletAddress ? (
                 <div className="relative p-6 flex-auto">
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="font-semibold text-gray-600 mb-4">
                     You can buy a total of 10 NFTs at a time.
                   </p>
-                  {console.log(this.state.price * this.state.n)}
+                  <p className="text-sm text-gray-600 mb-4">
+                    Account balance: {this.state.balance}
+                  </p>
                   <form onSubmit={this.onSubmit}>
                     <div className="mb-3 pt-0">
                       <span className="ext-sm text-gray-600">Total Price</span>

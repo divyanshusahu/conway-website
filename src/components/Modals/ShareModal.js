@@ -12,7 +12,7 @@ export default function ShareModal(props) {
   const copyURL = () => {
     navigator.clipboard.writeText(shareURL).then(() => {
       toast.success("Copied to clipboard", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: true,
       });
