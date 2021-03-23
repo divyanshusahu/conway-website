@@ -5,6 +5,7 @@ import { mintGOL, getGOLPrice } from "../../blockchain/gol.js";
 import { setTotalMinted } from "../../blockchain/actions.js";
 import { DEFAULT_ADDR } from "../../blockchain/constant.js";
 import BigNumber from "bignumber.js";
+import { ToastContainer } from "react-toastify";
 
 class BuyModal extends Component {
   constructor(props) {
@@ -148,6 +149,7 @@ class BuyModal extends Component {
           </div>
         </div>
         <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        <ToastContainer />
       </>
     );
   }

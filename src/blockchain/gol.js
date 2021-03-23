@@ -1,8 +1,12 @@
+import React from "react";
 import BigNumber from "bignumber.js";
 import { DEFAULT_ADDR } from "./constant.js";
+import { toast } from "react-toastify";
+
 export async function getTotalMinted(contract) {
   return await contract.methods["totalSupply"]().call();
 }
+
 export function getGOLPrice(ind, referral) {
   console.log("refera", referral);
   let price = new BigNumber(10).pow(18);
@@ -26,6 +30,7 @@ export function getGOLPrice(ind, referral) {
   }
   return price.dividedBy(10);
 }
+
 export function mintGOL(state, no, tm, referral) {
   console.log("adas", referral);
   let totalPrice = getGOLPrice(tm, referral).multipliedBy(no);
@@ -35,14 +40,35 @@ export function mintGOL(state, no, tm, referral) {
       value: totalPrice,
     })
     .on("transactionHash", function (hash) {
-      alert(`Pushed transaction ${hash}`);
+      //alert(`Pushed transaction ${hash}`);
+      toast.info(`Pushed transaction ${hash}`, {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: false,
+        closeButton: false,
+        style: { wordBreak: "break-word" },
+        draggable: false,
+      });
     })
     .on("confirmation", function (confirmationNumber, receipt) {
       if (confirmationNumber === 4) {
-        alert("successfully minted, Refresh plz.");
+        //alert("successfully minted, Refresh plz.");
+        toast.dismiss();
+        toast.success("Successfully minted. Visit My Collection Page.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       }
     })
     .on("error", function (error, receipt) {
-      alert(error.message);
+      //alert(error.message);
+      toast.dismiss();
+      toast.error("Transaction Failed", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     });
 }
