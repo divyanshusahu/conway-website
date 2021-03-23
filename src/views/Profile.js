@@ -9,6 +9,7 @@ import { getTokenDetails } from "../components/randomHashIndex";
 class Profile extends Component {
   componentDidUpdate() {}
   async componentWillReceiveProps(p) {
+    console.log(p);
     if (p.interface && p.walletAddress) {
       let tokens = await p.interface.gol.methods["getOwnerTokens"](
         p.walletAddress
@@ -75,9 +76,9 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   let a = [];
-  for (let i = 0; i < 618; i++) {
-    a.push(i);
-  }
+  // for (let i = 0; i < 618; i++) {
+  //   a.push(i);
+  // }
   return {
     interface: state.interface,
     walletAddress: state.walletAddress,

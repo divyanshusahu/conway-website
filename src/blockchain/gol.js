@@ -9,7 +9,6 @@ export async function getTotalMinted(contract) {
 let decimal = new BigNumber(10).pow(18);
 
 export function getGOLPrice(ind, referral) {
-  console.log("refera", referral);
   let price = decimal;
   if (referral && referral !== DEFAULT_ADDR) {
     price = price.multipliedBy(925).dividedBy(1000);
