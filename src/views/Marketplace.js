@@ -6,7 +6,7 @@ import Conway from "components/Conway.js";
 // import Operator from "./Operator.js";
 import { connect } from "react-redux";
 import { getTokenDetails } from "../components/randomHashIndex";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { setTotalMinted } from "../blockchain/actions.js";
 
 class Marketplace extends Component {
@@ -74,6 +74,7 @@ class Marketplace extends Component {
           </div>
         )}
         <Footer />
+        <ToastContainer />
       </>
     );
   }
