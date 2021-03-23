@@ -1,4 +1,5 @@
-import patternDetails from "./pattern.json";
+//import patternDetails from "./pattern.json";
+import { patternDetails, patterns_order } from "../final_patterns";
 
 const crypto = require("crypto");
 let hashIndex = [];
@@ -42,7 +43,8 @@ function getSpeed(tokenId) {
   return s[ind];
 }
 
-let patternNames = Object.keys(patternDetails);
+//let patternNames = Object.keys(patternDetails);
+let patternNames = patterns_order;
 
 export function getTokenDetails(tokenId) {
   let color = getColor(tokenId);

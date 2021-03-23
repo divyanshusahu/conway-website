@@ -176,7 +176,7 @@ export const patterns_order = [
   "rasputin",
 ];
 
-export const patterns = {
+export const patternDetails = {
   101: {
     pattern:
       "....OO......OO....n...O.O......O.O...n...O..........O...nOO.O..........O.OOnOO.O.O..OO..O.O.OOn...O.O.O..O.O.O...n...O.O.O..O.O.O...nOO.O.O..OO..O.O.OOnOO.O..........O.OOn...O..........O...n...O.O......O.O...n....OO......OO....n",
