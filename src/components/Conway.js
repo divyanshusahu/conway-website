@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Patterns from "./pattern2";
+// import Patterns from "./pattern2";
 import "./Conway.css";
 import getPlayer from "./audio/get-player";
 
@@ -158,17 +158,17 @@ class Conway extends Component {
     let x = buffer.length,
       y = buffer[0].length;
     let canAddRow = buffer[buffer.length - 1].reduce((total, cur) => {
-      return total || cur == 1;
+      return total || cur === 1;
     }, false);
     if (buffer.length - 2 >= 0)
       canAddRow = buffer[buffer.length - 2].reduce((total, cur) => {
-        return total || cur == 1;
+        return total || cur === 1;
       }, canAddRow);
-    for (var i = 0; i < x; i++) {
+    for (let i = 0; i < x; i++) {
       for (var j = 0; j < y; j++) {
         //analize neighbour cells
         var count = 0;
-        if (buffer[i][j] == 1) nextBoard[i][j] = 2;
+        if (buffer[i][j] === 1) nextBoard[i][j] = 2;
 
         for (var m = i - 1; m <= i + 1; m++) {
           for (var n = j - 1; n <= j + 1; n++) {
@@ -201,7 +201,7 @@ class Conway extends Component {
         //the cell must die
         if (count < 2 || count > 3) nextBoard[i][j] = 0;
         //if the cell is dead - make reincarnation!
-        else if (count == 3 && buffer[i][j] === 0) {
+        else if (count === 3 && buffer[i][j] === 0) {
           nextBoard[i][j] = 1;
         }
       }
@@ -247,18 +247,18 @@ class Conway extends Component {
 
         //in here we store next generation board
         var nextBoard = [];
-        for (var i = 0; i < board.length; i++)
+        for (let i = 0; i < board.length; i++)
           nextBoard.push(board[i].slice(0));
         let aliveCells = 0;
         //how many 'alive' cells are in the board?
         let active = new Set();
-        for (var i = 0; i < nextBoard.length; i++) {
-          for (var j = 0; j < nextBoard[i].length; j++) {
+        for (let i = 0; i < nextBoard.length; i++) {
+          for (let j = 0; j < nextBoard[i].length; j++) {
             if (board[i][j] > 0) aliveCells++;
 
             //analize neighbour cells
             var count = 0;
-            if (board[i][j] == 1) nextBoard[i][j] = 2;
+            if (board[i][j] === 1) nextBoard[i][j] = 2;
 
             for (var m = i - 1; m <= i + 1; m++) {
               for (var n = j - 1; n <= j + 1; n++) {
@@ -290,7 +290,7 @@ class Conway extends Component {
                   0 <= row &&
                   row <= board.length - 1
                 ) {
-                  if (this.buffer.length == 0) {
+                  if (this.buffer.length === 0) {
                     //no of rows of original board
                     this.buffer.push(Array(board.length));
                     this.buffer.push(Array(board.length));
@@ -306,7 +306,7 @@ class Conway extends Component {
             //the cell must die
             if (count < 2 || count > 3) nextBoard[i][j] = 0;
             //if the cell is dead - make reincarnation!
-            else if (count == 3 && board[i][j] === 0) {
+            else if (count === 3 && board[i][j] === 0) {
               active.add(i * j);
               // active.add((i / nextBoard[0].length) * (j / nextBoard.length));
               nextBoard[i][j] = 1;
@@ -333,7 +333,7 @@ class Conway extends Component {
 
         //if the function called not from click handler - update state
         // only present when the shouldLoop is false
-        if (caller != "handleCanvasClick")
+        if (caller !== "handleCanvasClick")
           this.setState({ board: nextBoard, step: this.state.step + 1 });
 
         //should we run draw one more time?
@@ -384,6 +384,8 @@ class Conway extends Component {
         return 300;
       case "slow":
         return 700;
+      default:
+        return 300;
     }
   }
 
@@ -395,9 +397,9 @@ class Conway extends Component {
     let r = [],
       temp = [];
     for (let i of this.props.pattern) {
-      if (i == ".") {
+      if (i === ".") {
         r.push(0);
-      } else if (i == "O") {
+      } else if (i === "O") {
         r.push(1);
       } else {
         temp.push(r);
@@ -508,12 +510,9 @@ class Conway extends Component {
       if (!this.state.board[i][j]) {
         var newBoard = this.state.board.slice(0);
         newBoard[i][j] = 1;
-        this.setState(
-          { board: newBoard },
-          (() => {
-            if (!this.state.shouldLoop) this.draw("handleCanvasClick");
-          }).bind(this)
-        );
+        this.setState({ board: newBoard }, () => {
+          if (!this.state.shouldLoop) this.draw("handleCanvasClick");
+        });
       }
     }
   }
@@ -525,7 +524,7 @@ class Conway extends Component {
     this.setState({ speed });
   }
   setPlayer() {
-    getPlayer().then(((player) => this.setState({ player })).bind(this));
+    getPlayer().then((player) => this.setState({ player }));
   }
   motion() {
     if (this.state.shouldLoop) {
@@ -534,7 +533,7 @@ class Conway extends Component {
       this.run();
     }
     if (!this.state.isPlayerSet) {
-      getPlayer().then(((player) => this.setState({ player })).bind(this));
+      getPlayer().then((player) => this.setState({ player }));
       this.setState({ isPlayerSet: true });
     }
   }
@@ -548,7 +547,7 @@ class Conway extends Component {
         if (c > 0) {
           str_r += "O";
           isNotEmpty += 1;
-        } else if (c == 0) {
+        } else if (c === 0) {
           str_r += ".";
         }
       }
@@ -559,60 +558,69 @@ class Conway extends Component {
   render() {
     var divWidth = { width: this.state.canvasSize.width + 2 + "px" };
     return (
-      <div id="gameBox" style={divWidth} className="my-4  bg-white">
-        <div style={{ padding: "5px 20px 10px", fontWeight: "bold" }}>
-          <span style={{ color: "#777", fontWeight: "bold" }}>
-            Name: {this.props.name}
-          </span>
-          <div style={{ float: "right", marginRight: "3px" }}>
-            <button onClick={this.motion.bind(this)} style={{ padding: "2px" }}>
-              {this.state.shouldLoop ? (
-                <i className="text-black fas fa-pause" />
-              ) : (
-                <i className="text-black fas fa-play" />
-              )}
-            </button>
-            <button
-              style={{ padding: "2px" }}
-              onClick={(() =>
-                this.setState({ playing: !this.state.playing })).bind(this)}
-            >
-              {this.state.playing ? (
-                <i className="text-black fas fa-volume-up" />
-              ) : (
-                <i className="text-black fas fa-volume-mute" />
-              )}
-            </button>
-            <button style={{ padding: "2px" }} onClick={this.clear.bind(this)}>
-              <i className="text-black fas fa-minus-circle" />
-            </button>
+      <>
+        <div className="bg-white shadow-lg rounded-lg my-8 p-2">
+          <div id="gameBox" style={divWidth} className="bg-white">
+            <div style={{ padding: "5px 20px 10px", fontWeight: "bold" }}>
+              <span className="text-gray-800 font-bold">{this.props.name}</span>
+              <div style={{ float: "right", marginRight: "3px" }}>
+                <button
+                  onClick={this.motion.bind(this)}
+                  className="px-1 focus:outline-none"
+                >
+                  {this.state.shouldLoop ? (
+                    <i className="text-gray-800 fas fa-pause" />
+                  ) : (
+                    <i className="text-gray-800 fas fa-play" />
+                  )}
+                </button>
+                <button
+                  className="px-1 focus:outline-none"
+                  onClick={() =>
+                    this.setState({ playing: !this.state.playing })
+                  }
+                >
+                  {this.state.playing ? (
+                    <i className="text-gray-800 fas fa-volume-up" />
+                  ) : (
+                    <i className="text-gray-800 fas fa-volume-mute" />
+                  )}
+                </button>
+                <button
+                  className="px-1 focus:outline-none"
+                  onClick={this.clear.bind(this)}
+                >
+                  <i className="text-gray-800 fas fa-minus-circle" />
+                </button>
+              </div>
+            </div>
+            <canvas
+              id={this.props.id}
+              width={this.state.canvasSize.width}
+              height={this.state.canvasSize.height}
+              onClick={this.handleCanvasClick.bind(this)}
+            ></canvas>
+            <div style={{ padding: "5px 20px 10px", fontWeight: "bold" }}>
+              <span className="text-gray-800 font-bold">
+                Generation: {Math.max(this.state.step - 1, 0)}
+              </span>
+              <div style={{ float: "right", marginRight: "3px" }}>
+                <input
+                  type="range"
+                  min="1"
+                  max="100"
+                  value={
+                    ((this.state.timeoutMax - this.state.speed) * 100) /
+                    (this.state.timeoutMax - this.state.timeoutMin)
+                  }
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+            </div>
+            {/* <button onClick={this.export.bind(this)}>export</button> */}
           </div>
         </div>
-        <canvas
-          id={this.props.id}
-          width={this.state.canvasSize.width}
-          height={this.state.canvasSize.height}
-          onClick={this.handleCanvasClick.bind(this)}
-        ></canvas>
-        <div style={{ padding: "5px 20px 10px", fontWeight: "bold" }}>
-          <span style={{ color: "#777", fontWeight: "bold" }}>
-            Generation: {Math.max(this.state.step - 1, 0)}
-          </span>
-          <div style={{ float: "right", marginRight: "3px" }}>
-            <input
-              type="range"
-              min="1"
-              max="100"
-              value={
-                ((this.state.timeoutMax - this.state.speed) * 100) /
-                (this.state.timeoutMax - this.state.timeoutMin)
-              }
-              onChange={this.handleChange.bind(this)}
-            />
-          </div>
-        </div>
-        {/* <button onClick={this.export.bind(this)}>export</button> */}
-      </div>
+      </>
     );
   }
 }

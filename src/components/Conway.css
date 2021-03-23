@@ -1,7 +1,6 @@
 #gameBox, .list-group, .select-group, .button-group {
     /* margin: 10px auto; */
     display: inline-block;
-    border: 1px solid #ccc;
   }
   
   /* .button-group {

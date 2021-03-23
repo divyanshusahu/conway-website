@@ -7,18 +7,15 @@ import { connect } from "react-redux";
 import { getTokenDetails } from "../components/randomHashIndex";
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidUpdate() {}
   async componentWillReceiveProps(p) {
     if (p.interface && p.walletAddress) {
       let tokens = await p.interface.gol.methods["getOwnerTokens"](
         p.walletAddress
       ).call();
-      if (p.userTokens.length == tokens.length) {
+      if (p.userTokens.length === tokens.length) {
         let matched = tokens.reduce((matching, token, tokenIndex) => {
-          return matching && token == p.userTokens[tokenIndex];
+          return matching && token === p.userTokens[tokenIndex];
         }, true);
         if (matched) return;
       }
@@ -30,7 +27,7 @@ class Profile extends Component {
     return (
       <>
         <IndexNavbar />
-        {this.props.userTokens.length == 0 ? (
+        {this.props.userTokens.length === 0 ? (
           <div className="flex w-full h-600-px relative justify-center items-center ">
             <div className="font-semibold text-2xl text-gray-700">
               No mystic Game of Life tokens to show. Buy some{" "}
@@ -84,8 +81,8 @@ const mapStateToProps = (state) => {
     interface: state.interface,
     walletAddress: state.walletAddress,
     totalMinted: state.totalMinted,
-    userTokens: a,
-    // userTokens: state.userTokens,
+    //userTokens: a,
+    userTokens: state.userTokens,
   };
 };
 

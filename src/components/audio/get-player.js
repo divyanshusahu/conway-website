@@ -3,7 +3,7 @@ import { Scale } from "tonal";
 import getInstrument from "./get-instrument";
 import hashIndex from "../randomHashIndex";
 
-const ONE_HUNDRED = 100;
+// const ONE_HUNDRED = 100;
 const NOTE_TIME_OFFSET_S = 0.01;
 
 const tonicPc = "D";

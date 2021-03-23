@@ -2,7 +2,7 @@ import React from "react";
 
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import Footer from "components/Footers/Footer.js";
-import Conway from "components/Conway.js";
+
 export default function FAQ() {
   return (
     <>
