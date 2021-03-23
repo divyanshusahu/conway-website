@@ -146,9 +146,9 @@ class Index extends Component {
                   className="form-checkbox"
                   style={{ border: "2px solid black" }}
                   type="checkbox"
-                  onClick={((e) => {
+                  onClick={(e) => {
                     this.setState({ tocCheck: e.target.checked });
-                  }).bind(this)}
+                  }}
                 />{" "}
                 I've read and agreed to the{" "}
                 <a className="text-blue-500 hover:underline" href="/#/toc">
@@ -160,9 +160,9 @@ class Index extends Component {
                   className="form-checkbox"
                   style={{ border: "2px solid black" }}
                   type="checkbox"
-                  onClick={((e) => {
+                  onClick={(e) => {
                     this.setState({ artCheck: e.target.checked });
-                  }).bind(this)}
+                  }}
                 />{" "}
                 I understand I am buying art, not a financial instrument.
               </p>

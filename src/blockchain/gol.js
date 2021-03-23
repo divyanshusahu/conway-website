@@ -1,7 +1,6 @@
 import BigNumber from "bignumber.js";
 import { DEFAULT_ADDR } from "./constant.js";
 import { toast } from "react-toastify";
-import { check } from "prettier";
 
 export async function getTotalMinted(contract) {
   return await contract.methods["totalSupply"]().call();

@@ -18,7 +18,7 @@ const rootReducer = (state = initialState, action) => {
       return newState;
     }
     case "TOTALMINTED": {
-      if (state.totalMinted == action.payload) return state;
+      if (state.totalMinted === action.payload) return state;
       const newState = { ...state };
       newState["totalMinted"] = action.payload;
       return newState;

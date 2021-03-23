@@ -75,7 +75,7 @@ class Profile extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let a = [];
+  //let a = [];
   // for (let i = 0; i < 618; i++) {
   //   a.push(i);
   // }

@@ -13,10 +13,7 @@ const notes = octaves.reduce((allNotes, octave) => {
   return allNotes.concat(Scale.notes(`${tonicPc}${octave}`, "major"));
 }, []);
 
-console.log(hashIndex);
 const getNoteAtHeight = (activeCells) => {
-  console.log(activeCells);
-  console.log(notes);
   return Array.from(activeCells).map((e) => {
     return notes[
       Math.min(notes.length - 1, hashIndex[e % 1000] % notes.length)
@@ -27,8 +24,6 @@ const getNoteAtHeight = (activeCells) => {
 const getPlayer = () =>
   getInstrument().then((instrument) => (activeCells, releaseTime) => {
     const notes = getNoteAtHeight(activeCells);
-    console.log(notes);
-    console.log(releaseTime);
     instrument.triggerAttackRelease(
       notes,
       releaseTime,

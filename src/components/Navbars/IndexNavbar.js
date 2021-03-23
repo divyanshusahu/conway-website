@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Interface from "../../blockchain/interface";
-import { getWalletAddress, setTotalMinted } from "../../blockchain/actions.js";
+import { getWalletAddress } from "../../blockchain/actions.js";
 
 class NavBar extends Component {
   constructor(props) {
