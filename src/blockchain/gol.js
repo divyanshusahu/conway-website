@@ -1,4 +1,3 @@
-import React from "react";
 import BigNumber from "bignumber.js";
 import { DEFAULT_ADDR } from "./constant.js";
 import { toast } from "react-toastify";
@@ -10,7 +9,7 @@ export async function getTotalMinted(contract) {
 export function getGOLPrice(ind, referral) {
   console.log("refera", referral);
   let price = new BigNumber(10).pow(18);
-  if (referral && referral != DEFAULT_ADDR) {
+  if (referral && referral !== DEFAULT_ADDR) {
     price = price.multipliedBy(925).dividedBy(1000);
   }
   if (ind < 125) {

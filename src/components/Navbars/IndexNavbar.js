@@ -1,13 +1,11 @@
-/*eslint-disable*/
-import { TWITTER_HANDLE } from "../../blockchain/constant";
 import React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 import Interface from "../../blockchain/interface";
-import { getWalletAddress, setTotalMinted } from "../../blockchain/actions.js";
+import { getWalletAddress } from "../../blockchain/actions.js";
 
 class NavBar extends Component {
   constructor(props) {
@@ -21,10 +19,10 @@ class NavBar extends Component {
   }
   async componentDidMount() {
     if (typeof window.ethereum == "undefined") {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Metamask not installed",
+      toast.error("Metamask not installed", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
       });
       return;
     }
@@ -35,10 +33,10 @@ class NavBar extends Component {
 
       interfaceObj.isConnectedToProperNetwork().then((v) => {
         if (!v) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Connected to wrong network, use BSC",
+          toast.error("Connected to wrong network, use BSC", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: true,
           });
           return;
         }
@@ -126,6 +124,7 @@ class NavBar extends Component {
             </div>
           </div>
         </nav>
+        <ToastContainer />
       </>
     );
   }

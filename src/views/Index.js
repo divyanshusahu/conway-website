@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link as RSLink, Element } from "react-scroll";
 
-import Swal from "sweetalert2";
-
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import BuyProgress from "components/ProgressBar/BuyProgress.js";
