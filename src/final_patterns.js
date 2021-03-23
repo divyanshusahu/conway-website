@@ -6,7 +6,6 @@ export const patterns_order = [
   "101",
   "Achims p4",
   "Achims p8",
-  "blinker",
   "acorn",
   "A for all",
   "airforce",
@@ -204,7 +203,7 @@ export const patternDetails = {
     pattern:
       "......OO......n......O.O.OO.On........O.O.OOn........OO....n..............n..............n.OOOOO.....OO.nO....O.....OO.n.....O........nO...O.........n..O...........n",
     size: "30x20",
-    confined: false,
+    confined: true,
   },
   "Achims p4": {
     pattern:
@@ -218,7 +217,6 @@ export const patternDetails = {
     size: "15x10",
     confined: true,
   },
-  blinker: { pattern: "OOOn", size: "15x10", confined: true },
   acorn: {
     pattern: ".O.....n...O...nOO..OOOn",
     size: "15x10",
