@@ -195,6 +195,7 @@ select { /* 1 */
 
 button,
 [type="button"],
+[type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
 }
@@ -205,6 +206,7 @@ button,
 
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   border-style: none;
   padding: 0;
@@ -216,6 +218,7 @@ button::-moz-focus-inner,
 
 button:-moz-focusring,
 [type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
@@ -284,9 +287,18 @@ textarea {
  * 2. Correct the outline style in Safari.
  */
 
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
 /**
  * Remove the inner padding in Chrome and Safari on macOS.
  */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
 
 /**
  * 1. Correct the inability to style clickable types in iOS and Safari.
@@ -1501,10 +1513,6 @@ video {
   list-style-type: none;
 }
 
-.ul>li {
-  list-style-type: circle;
-}
-
 .m-2 {
   margin: 0.5rem;
 }
@@ -1919,12 +1927,20 @@ video {
   padding-top: 0.5rem;
 }
 
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
 
 .pl-3 {
   padding-left: 0.75rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .pr-4 {
@@ -1951,6 +1967,10 @@ video {
   padding-top: 2rem;
 }
 
+.pr-10 {
+  padding-right: 2.5rem;
+}
+
 .pl-10 {
   padding-left: 2.5rem;
 }
@@ -1965,10 +1985,6 @@ video {
 
 .pt-16 {
   padding-top: 4rem;
-}
-
-.pb-16 {
-  padding-bottom: 4rem;
 }
 
 .pt-20 {
@@ -2224,19 +2240,10 @@ video {
   color: rgba(49, 130, 206, var(--text-opacity));
 }
 
-.text-pink-400 {
-  --text-opacity: 1;
-  color: #f687b3;
-  color: rgba(246, 135, 179, var(--text-opacity));
-}
-
 .hover\:text-gray-400:hover {
   --text-opacity: 1;
   color: #cbd5e0;
   color: rgba(203, 213, 224, var(--text-opacity));
-}
-.hover\:underline:hover {
-  text-decoration: underline;
 }
 
 .hover\:text-gray-600:hover {
@@ -2271,6 +2278,10 @@ video {
   text-decoration: none;
 }
 
+.hover\:underline:hover {
+  text-decoration: underline;
+}
+
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -2282,6 +2293,10 @@ video {
 
 .align-middle {
   vertical-align: middle;
+}
+
+.visible {
+  visibility: visible;
 }
 
 .whitespace-no-wrap {
@@ -2457,10 +2472,6 @@ video {
 
   .sm\:ml-1 {
     margin-left: 0.25rem;
-  }
-
-  .sm\:mr-2 {
-    margin-right: 0.5rem;
   }
 
   .sm\:pt-0 {
@@ -2659,29 +2670,9 @@ video {
             flex-direction: row;
   }
 
-  .lg\:self-center {
-    -webkit-align-self: center;
-            align-self: center;
-  }
-
   .lg\:justify-start {
     -webkit-justify-content: flex-start;
             justify-content: flex-start;
-  }
-
-  .lg\:order-1 {
-    -webkit-order: 1;
-            order: 1;
-  }
-
-  .lg\:order-2 {
-    -webkit-order: 2;
-            order: 2;
-  }
-
-  .lg\:order-3 {
-    -webkit-order: 3;
-            order: 3;
   }
 
   .lg\:mb-0 {
@@ -2752,10 +2743,6 @@ video {
 
   .lg\:text-left {
     text-align: left;
-  }
-
-  .lg\:text-right {
-    text-align: right;
   }
 
   .lg\:text-white {

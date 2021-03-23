@@ -1,11 +1,24 @@
 import React from "react";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function ShareModal(props) {
   if (!props.open) return null;
   let shareURL = "";
   if (typeof window !== "undefined") {
     shareURL = `${window.location.host}/?referral=${props.wallet}`;
   }
+
+  const copyURL = () => {
+    navigator.clipboard.writeText(shareURL).then(() => {
+      toast.success("Copied to clipboard", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+    });
+  };
 
   return (
     <>
@@ -32,12 +45,19 @@ export default function ShareModal(props) {
                   <p className="text-sm text-gray-600 mb-4">
                     Copy this URL and share it with your friends.
                   </p>
-                  <div className="mb-3 pt-0">
+                  <div class="relative flex w-full flex-wrap items-stretch mb-3">
                     <input
                       type="text"
-                      className="px-2 py-1 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                      class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10"
                       defaultValue={shareURL}
+                      disabled={true}
                     />
+                    <span
+                      class="cursor-pointer z-10 h-full leading-snug font-normal absolute text-center text-gray-500 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-2 py-1"
+                      onClick={copyURL}
+                    >
+                      <i class="fas fa-copy"></i>
+                    </span>
                   </div>
                 </>
               ) : (
@@ -50,6 +70,7 @@ export default function ShareModal(props) {
         </div>
       </div>
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      <ToastContainer />
     </>
   );
 }
