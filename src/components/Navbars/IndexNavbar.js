@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Interface from "../../blockchain/interface";
-import { getWalletAddress } from "../../blockchain/actions.js";
+import { getWalletAddress, setTotalMinted } from "../../blockchain/actions.js";
 
 class NavBar extends Component {
   constructor(props) {
@@ -95,6 +95,14 @@ class NavBar extends Component {
                     href="/#/faq"
                   >
                     FAQ
+                  </a>
+                </li>
+                <li className="flex items-center">
+                  <a
+                    className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                    href="/#/marketplace"
+                  >
+                    Marketplace
                   </a>
                 </li>
                 <li className="flex items-center">

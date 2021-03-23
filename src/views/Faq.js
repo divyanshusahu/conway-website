@@ -50,17 +50,6 @@ export default function FAQ() {
               style={{ marginTop: "-16rem" }}
             >
               <div className="px-6 py-6">
-                {/* <div className="flex flex-wrap" style={{ justifyContent: 'space-around' }}>
-                            <Conway size="30x20" color={1} speed="fast" pattern="Blonker" id="ts1" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="Cousins" id="ts2" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="Frog II" id="ts3" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="Loading dock" id="ts4" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="Biting off more than they can chew" id="ts5" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="Jam" id="ts6" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="Double caterer" id="ts7" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="38P7.2" id="ts8" confined={true} />
-                            <Conway size="30x20" color={1} speed="fast" pattern="55P10" id="ts9" confined={true} />
-                        </div> */}
                 <h2 className="pt-4 font-semibold text-4xl text-gray-700">
                   Frequently Asked Questions
                 </h2>

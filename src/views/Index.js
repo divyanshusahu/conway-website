@@ -8,6 +8,7 @@ import Footer from "components/Footers/Footer.js";
 import BuyProgress from "components/ProgressBar/BuyProgress.js";
 import ShareModal from "components/Modals/ShareModal.js";
 import BuyModal from "components/Modals/BuyModal.js";
+import { toast } from "react-toastify";
 
 class Index extends Component {
   constructor(props) {
@@ -15,6 +16,8 @@ class Index extends Component {
     this.state = {
       shareModalOpen: false,
       buyModalOpen: false,
+      artCheck: false,
+      tocCheck: false,
     };
   }
 
@@ -107,6 +110,7 @@ class Index extends Component {
               <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                 <BuyProgress totalMinted={this.props.totalMinted} />
               </div>
+
               <div className="sm:block flex flex-col mt-10">
                 <span
                   className="get-started cursor-pointer text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-2 bg-blue-500 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
@@ -117,14 +121,51 @@ class Index extends Component {
                   Share
                 </span>
                 <span
-                  className="github-star cursor-pointer sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
+                  className=" cursor-pointer sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg"
                   onClick={() => {
-                    this.setState({ buyModalOpen: true });
+                    if (this.state.tocCheck && this.state.artCheck) {
+                      this.setState({ buyModalOpen: true });
+                    } else {
+                      toast.dismiss();
+                      toast.error(
+                        "Term and conditions, and art notice not agreed to.",
+                        {
+                          position: "top-right",
+                          autoClose: 3000,
+                          hideProgressBar: true,
+                        }
+                      );
+                    }
                   }}
                 >
                   <span>Buy</span>
                 </span>
               </div>
+              <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
+                <input
+                  className="form-checkbox"
+                  style={{ border: "2px solid black" }}
+                  type="checkbox"
+                  onClick={((e) => {
+                    this.setState({ tocCheck: e.target.checked });
+                  }).bind(this)}
+                />{" "}
+                I've read and agreed to the{" "}
+                <a className="text-blue-500 hover:underline" href="/#/toc">
+                  terms and conditions.
+                </a>
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
+                <input
+                  className="form-checkbox"
+                  style={{ border: "2px solid black" }}
+                  type="checkbox"
+                  onClick={((e) => {
+                    this.setState({ artCheck: e.target.checked });
+                  }).bind(this)}
+                />{" "}
+                I understand I am buying art, not a financial instrument.
+              </p>
             </div>
           </div>
         </div>
@@ -391,8 +432,13 @@ class Index extends Component {
           wallet={this.props.walletAddress ? this.props.walletAddress : ""}
         />
         <BuyModal
-          open={this.state.buyModalOpen}
+          open={
+            this.state.buyModalOpen &&
+            this.state.tocCheck &&
+            this.state.artCheck
+          }
           close={this.closeModal.bind(this)}
+          // disabled={!(this.state.tocCheck && this.state.artCheck)}
         />
         <ToastContainer />
       </>

@@ -42,7 +42,8 @@ export default function ShareModal(props) {
               {props.wallet ? (
                 <>
                   <p className="text-sm text-gray-600 mb-4">
-                    Copy this URL and share it with your friends.
+                    Copy this URL and share it with your friends. Receive 7.5%
+                    bonus on each NFT bought and friend will get 7.5% discount.
                   </p>
                   <div class="relative flex w-full flex-wrap items-stretch mb-3">
                     <input
