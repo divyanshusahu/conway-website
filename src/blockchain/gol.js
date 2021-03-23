@@ -1,10 +1,10 @@
 import BigNumber from "bignumber.js";
-import { DEFAULT_ADDR } from './constant.js';
+import { DEFAULT_ADDR } from "./constant.js";
 export async function getTotalMinted(contract) {
   return await contract.methods["totalSupply"]().call();
 }
 export function getGOLPrice(ind, referral) {
-  console.log("refera", referral)
+  console.log("refera", referral);
   let price = new BigNumber(10).pow(18);
   if (referral && referral != DEFAULT_ADDR) {
     price = price.multipliedBy(925).dividedBy(1000);
@@ -27,7 +27,7 @@ export function getGOLPrice(ind, referral) {
   return price.dividedBy(10);
 }
 export function mintGOL(state, no, tm, referral) {
-  console.log("adas", referral)
+  console.log("adas", referral);
   let totalPrice = getGOLPrice(tm, referral).multipliedBy(no);
   state.interface.gol.methods["mintNFT"](no, referral)
     .send({

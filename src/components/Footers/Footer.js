@@ -1,5 +1,9 @@
 import React from "react";
-import { GOL_ADDRESS, TWITTER_HANDLE, TELEGRAM_URL } from '../../blockchain/constant.js'
+import {
+  GOL_ADDRESS,
+  TWITTER_HANDLE,
+  TELEGRAM_URL,
+} from "../../blockchain/constant.js";
 
 export default function Footer() {
   return (
@@ -32,9 +36,7 @@ export default function Footer() {
                 Join us at any of these platforms, on this mystic journey.
               </h5>
               <div className="mt-6 lg:mb-0 mb-6">
-                <a
-                  href={`https://twitter.com/${TWITTER_HANDLE}`}
-                >
+                <a href={`https://twitter.com/${TWITTER_HANDLE}`}>
                   <button
                     className=" text-blue-400 hover:shadow-lg h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
@@ -42,9 +44,7 @@ export default function Footer() {
                     <i className="fab fa-twitter fa-2x"></i>
                   </button>
                 </a>
-                <a
-                  href={TELEGRAM_URL}
-                >
+                <a href={TELEGRAM_URL}>
                   <button
                     className=" text-blue-400  hover:shadow-lg h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
@@ -101,7 +101,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-gray-600 font-semibold py-1">
-                Made by  <i className="fa fa-heart" style={{ color: 'red' }}></i> {" "}
+                Made by <i className="fa fa-heart" style={{ color: "red" }}></i>{" "}
                 <span className="text-gray-600 hover:text-gray-900">
                   Mystic Game of Life
                 </span>

@@ -10,7 +10,6 @@ import BuyProgress from "components/ProgressBar/BuyProgress.js";
 import ShareModal from "components/Modals/ShareModal.js";
 import BuyModal from "components/Modals/BuyModal.js";
 
-
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -100,7 +99,8 @@ class Index extends Component {
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
                 Cause if you do, it can be yours now. You can also refer this to
-                your friend, he will get 7.5% discount. And you will receive 7.5% commission on sell.
+                your friend, he will get 7.5% discount. And you will receive
+                7.5% commission on sell.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed mt-4 mb-4">
                 Minted: {this.props.totalMinted}/390
@@ -197,13 +197,13 @@ class Index extends Component {
                         <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
                           {/*<i className="fas fa-sitemap"></i>*/}
                           <h6 className="text-xl font-semibold">1</h6>
-                        </div >
+                        </div>
                         <p className="mb-4 text-gray-600">
                           Any live cell with fewer than two live neighbours
                           dies, as if by underpopulation.
                         </p>
-                      </div >
-                    </div >
+                      </div>
+                    </div>
                     <div className="relative flex flex-col min-w-0">
                       <div className="px-4 py-5 flex-auto">
                         <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
@@ -216,7 +216,7 @@ class Index extends Component {
                         </p>
                       </div>
                     </div>
-                  </div >
+                  </div>
                   <div className="w-full md:w-6/12 px-4">
                     <div className="relative flex flex-col min-w-0 mt-4">
                       <div className="px-4 py-5 flex-auto">
@@ -246,10 +246,10 @@ class Index extends Component {
                       </div>
                     </div>
                   </div>
-                </div >
-              </div >
-            </div >
-          </div >
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="container mx-auto px-4 pb-32 pt-48">
             <div className="items-center flex flex-wrap">
@@ -258,11 +258,13 @@ class Index extends Component {
                   <div className="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
                     <i className="fas fa-clipboard-list text-xl"></i>
                   </div>
-                  <h3 className="text-3xl font-semibold">
-                    Mystic Properties
-                  </h3>
+                  <h3 className="text-3xl font-semibold">Mystic Properties</h3>
                   <p className="mt-4 text-lg leading-relaxed text-gray-600">
-                    Mystic game of life are generative NFTs, which are inherently unique and differs significantly from each other. The change in generation geo-footprint over time can be oscillatory, chaotic and objective motion. Other properites are:
+                    Mystic game of life are generative NFTs, which are
+                    inherently unique and differs significantly from each other.
+                    The change in generation geo-footprint over time can be
+                    oscillatory, chaotic and objective motion. Other properites
+                    are:
                   </p>
                   <ul className="list-none mt-6">
                     <li className="py-2">
@@ -330,7 +332,7 @@ class Index extends Component {
               <h2 className="font-semibold text-4xl">Rare NFT mints</h2>
             </div>
           </div>
-        </section >
+        </section>
 
         <section className="block relative z-1 bg-gray-700">
           <div className="container mx-auto">
@@ -387,8 +389,7 @@ class Index extends Component {
         <ShareModal
           open={this.state.shareModalOpen}
           close={this.closeModal.bind(this)}
-          wallet={this.props.walletAddress ?
-            this.props.walletAddress : ''}
+          wallet={this.props.walletAddress ? this.props.walletAddress : ""}
         />
         <BuyModal
           open={this.state.buyModalOpen}
@@ -403,7 +404,7 @@ const mapStateToProps = (state) => {
   return {
     interface: state.interface,
     walletAddress: state.walletAddress,
-    totalMinted: state.totalMinted
+    totalMinted: state.totalMinted,
   };
 };
 

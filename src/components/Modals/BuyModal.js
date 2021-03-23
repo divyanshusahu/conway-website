@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import queryString from "query-string";
 import { mintGOL, getGOLPrice } from "../../blockchain/gol.js";
 import { setTotalMinted } from "../../blockchain/actions.js";
@@ -23,25 +23,29 @@ class BuyModal extends Component {
   };
   componentWillReceiveProps(p) {
     if (p.interface) {
-      this.setState({ price: this.getPrice(p.totalMinted, this.state.referral) })
+      this.setState({
+        price: this.getPrice(p.totalMinted, this.state.referral),
+      });
     }
   }
   getPrice(totalMinted, referral) {
-    let decimal = new BigNumber('10').pow(18);
-    return getGOLPrice(totalMinted, referral).dividedBy(decimal).toFixed(2)
+    let decimal = new BigNumber("10").pow(18);
+    return getGOLPrice(totalMinted, referral).dividedBy(decimal).toFixed(2);
   }
   componentDidMount() {
     const ref = queryString.parse(window.location.search);
-    let referral = typeof ref.referral == 'undefined' ? '' : ref.referral;
+    let referral = typeof ref.referral == "undefined" ? "" : ref.referral;
     this.setState({ referral });
   }
   componentDidUpdate() {
-    setTotalMinted(this.props.interface, this.props.dispatch)
+    setTotalMinted(this.props.interface, this.props.dispatch);
   }
   async buyToken() {
-    let tm = await setTotalMinted(this.props.interface, this.props.dispatch)
-    let referral = this.state.referral == DEFAULT_ADDR || !this.state.referral ?
-      DEFAULT_ADDR : this.state.referral;
+    let tm = await setTotalMinted(this.props.interface, this.props.dispatch);
+    let referral =
+      this.state.referral == DEFAULT_ADDR || !this.state.referral
+        ? DEFAULT_ADDR
+        : this.state.referral;
     mintGOL(this.props, this.state.n, tm, referral);
   }
   render() {
@@ -91,17 +95,25 @@ class BuyModal extends Component {
                         className="px-2 py-1 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
                         value={this.state.referral}
                         onChange={((e) => {
-                          if (e.target.value.length != 42 && e.target.value.length != 0) return;
+                          if (
+                            e.target.value.length != 42 &&
+                            e.target.value.length != 0
+                          )
+                            return;
                           this.setState({
                             referral: e.target.value,
-                            price: this.getPrice(this.props.totalMinted, e.target.value)
-                          })
-                        }).bind(this)
-                        }
+                            price: this.getPrice(
+                              this.props.totalMinted,
+                              e.target.value
+                            ),
+                          });
+                        }).bind(this)}
                       />
                     </div>
                     <div className="mb-3 pt-0">
-                      <span className="ext-sm text-gray-600">No of MysticGol</span>
+                      <span className="ext-sm text-gray-600">
+                        No of MysticGol
+                      </span>
                       <input
                         type="number"
                         placeholder="Total NFTs"
@@ -111,8 +123,10 @@ class BuyModal extends Component {
                         value={this.state.n}
                         onChange={(e) => {
                           let n = e.target.value;
-                          if (e.target.value > 10) { n = 10; }
-                          this.setState({ n })
+                          if (e.target.value > 10) {
+                            n = 10;
+                          }
+                          this.setState({ n });
                         }}
                       />
                     </div>
@@ -126,10 +140,10 @@ class BuyModal extends Component {
                   </form>
                 </div>
               ) : (
-                  <p className="relative p-6 flex-auto text-sm text-gray-800">
-                    Please connect your wallet
-                  </p>
-                )}
+                <p className="relative p-6 flex-auto text-sm text-gray-800">
+                  Please connect your wallet
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -143,7 +157,7 @@ const mapStateToProps = (state) => {
   return {
     interface: state.interface,
     walletAddress: state.walletAddress,
-    totalMinted: state.totalMinted
+    totalMinted: state.totalMinted,
   };
 };
 

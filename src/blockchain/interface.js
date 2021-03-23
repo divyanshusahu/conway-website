@@ -12,8 +12,6 @@ class Interface {
     let chainId = await this.web3.eth.getChainId();
     return chainId === CHAIN_ID;
   }
-
-
 }
 
 export default Interface;

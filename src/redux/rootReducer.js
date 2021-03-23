@@ -2,7 +2,7 @@ const initialState = {
   interface: null,
   walletAddress: null,
   totalMinted: 0,
-  userTokens: []
+  userTokens: [],
 };
 
 const rootReducer = (state = initialState, action) => {

@@ -49,7 +49,9 @@ class BuyProgress extends Component {
   }
 
   addBars(totalMinted) {
-    const [currentLevel, currentLevelFilled] = this.calculateCurrentLevel(totalMinted);
+    const [currentLevel, currentLevelFilled] = this.calculateCurrentLevel(
+      totalMinted
+    );
     let bars = [];
     let x = 0;
     while (x <= currentLevel) {

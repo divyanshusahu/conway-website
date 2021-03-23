@@ -9,16 +9,15 @@ import Swal from "sweetalert2";
 import Interface from "../../blockchain/interface";
 import { getWalletAddress, setTotalMinted } from "../../blockchain/actions.js";
 
-
 class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       navbarOpen: false,
-    }
+    };
   }
   setNavBarOpen() {
-    this.setState({ navbarOpen: !this.state.navbarOpen })
+    this.setState({ navbarOpen: !this.state.navbarOpen });
   }
   async componentDidMount() {
     if (typeof window.ethereum == "undefined") {
@@ -44,7 +43,7 @@ class NavBar extends Component {
           return;
         }
       });
-      getWalletAddress(this.props.dispatch)
+      getWalletAddress(this.props.dispatch);
       // setTotalMinted(interfaceObj, this.props.dispatch)
     } else {
       const s = this.props.interface;
@@ -63,7 +62,7 @@ class NavBar extends Component {
                 className="text-gray-800 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase"
               >
                 Msytic Game of Life
-            </Link>
+              </Link>
               <button
                 className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                 type="button"
@@ -92,29 +91,35 @@ class NavBar extends Component {
                 </li>
               </ul> */}
               <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-
                 <li className="flex items-center">
                   <a
                     className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                     href="/#/faq"
                   >
                     FAQ
-                </a>
-                </li><li className="flex items-center">
+                  </a>
+                </li>
+                <li className="flex items-center">
                   <a
                     className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                     href="/#/profile"
                   >
                     {/* <i className="text-gray-500 far fa-file-alt text-lg leading-lg mr-2" />{" "} */}
-                  My Collection
-                </a>
+                    My Collection
+                  </a>
                 </li>
                 <li className="flex items-center">
-                  <button disabled={this.props.walletAddress} onClick={() => getWalletAddress(this.props.dispatch)}
-                    className={`bg-${this.props.walletAddress ? 'green-500' : 'gray-800'} text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150`}
+                  <button
+                    disabled={this.props.walletAddress}
+                    onClick={() => getWalletAddress(this.props.dispatch)}
+                    className={`bg-${
+                      this.props.walletAddress ? "green-500" : "gray-800"
+                    } text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150`}
                     type="button"
                   >
-                    {this.props.walletAddress ? this.props.walletAddress.substring(0, 8) + "..." : "Connect"}
+                    {this.props.walletAddress
+                      ? this.props.walletAddress.substring(0, 8) + "..."
+                      : "Connect"}
                   </button>
                 </li>
               </ul>
