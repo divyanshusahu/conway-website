@@ -33,7 +33,7 @@ const getPlayer = () =>
       notes,
       releaseTime,
       now() + NOTE_TIME_OFFSET_S,
-      0.03
+      0.1
     );
   });
 
